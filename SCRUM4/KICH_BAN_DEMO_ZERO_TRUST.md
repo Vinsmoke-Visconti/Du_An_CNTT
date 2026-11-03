@@ -4,11 +4,11 @@
 ---
 
 - **Đơn vị:** Đại học Tôn Đức Thắng (TDTU) – Khoa Công nghệ Thông tin
-- **Đồ án chuyên ngành:** Đồ án Tốt nghiệp / Đồ án CNTT (Khóa 2026 – 2027)
+- **Dự án:** Dự Án CNTT (Khóa 2026 – 2027)
 - **Sinh viên thực hiện:**
   - **Huỳnh Nguyễn Quốc Việt** (MSSV: 52300267) – Phụ trách: Kiến trúc ZTNA, Gateway Pomerium, Identity Keycloak, SIEM Wazuh
   - **Nguyễn Hoàng Việt** (MSSV: 52300268) – Phụ trách: Hạ tầng Proxmox VE, OpenEMR RBAC, MariaDB TDE, PKI Easy-RSA
-- **Giảng viên hướng dẫn:** ThS. Bùi Qúy Anh
+- **Giảng viên hướng dẫn:** TS. Bùi Quy Anh
 - **Thời lượng dự kiến:** 20 – 25 phút
 - **Vị trí lưu trữ:** `DU_AN_CNTT/SCRUM4/`
 
@@ -470,6 +470,6 @@ Nếu xảy ra tình huống bất khả kháng trong buổi trình diễn thự
 
 ## LỜI KẾT & THÔNG ĐIỆP BẢO VỆ ĐỒ ÁN
 
-> *"Kính thưa Hội đồng và Quý Thầy Cô, qua 6 phân đoạn trình diễn trực tiếp trên hệ sinh thái thực tế, nhóm chúng em đã chứng minh một cách toàn diện rằng: Mô hình Zero Trust không phải là một khẩu hiệu lý thuyết, mà là một giải pháp kiến trúc khả thi, mạnh mẽ và cần thiết để bảo vệ hệ thống y tế hiện đại. Mọi yêu cầu truy cập từ thiết bị, danh tính cho đến từng bản ghi bệnh án đều được kiểm soát nghiêm ngặt theo các nguyên tắc 'Không bao giờ tin tưởng ngầm định', 'Quyền tối thiểu' và 'Luôn giả định bị xâm nhập'. Nhóm chúng em xin chân thành cảm ơn Thầy Bùi Qúy Anh đã tận tình hướng dẫn và xin kính mời Hội đồng đặt câu hỏi đóng góp cho đồ án."*
+> *"Kính thưa Hội đồng và Quý Thầy Cô, qua 6 phân đoạn trình diễn trực tiếp trên hệ sinh thái thực tế, nhóm chúng em đã chứng minh một cách toàn diện rằng: Mô hình Zero Trust không phải là một khẩu hiệu lý thuyết, mà là một giải pháp kiến trúc khả thi, mạnh mẽ và cần thiết để bảo vệ hệ thống y tế hiện đại. Mọi yêu cầu truy cập từ thiết bị, danh tính cho đến từng bản ghi bệnh án đều được kiểm soát nghiêm ngặt theo các nguyên tắc 'Không bao giờ tin tưởng ngầm định', 'Quyền tối thiểu' và 'Luôn giả định bị xâm nhập'. Nhóm chúng em xin chân thành cảm ơn Thầy Bùi Quy Anh đã tận tình hướng dẫn và xin kính mời Hội đồng đặt câu hỏi đóng góp cho dự án."*
 
 ---

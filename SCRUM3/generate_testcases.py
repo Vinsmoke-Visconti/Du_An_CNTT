@@ -2,10 +2,10 @@
 """
 =============================================================
   ZERO TRUST HOSPITAL - BO TEST CASE TOAN DIEN (v2)
-  Du an: Bao mat Ho so Y te Dien tu bang Kien truc Zero Trust
+  Du an: Bao mat Ho so Y te Dien tu bang Kien truc Zero Trust (Du An CNTT)
   Nhom: 52300267 - Huynh Nguyen Quoc Viet
         52300268 - Nguyen Hoang Viet
-  GVHD: ThS. Bui Quy Anh
+  GVHD: TS. Bui Quy Anh
 =============================================================
   Chay: python generate_testcases.py
   Output: ZeroTrust_TestCases_Toan_Dien.xlsx
@@ -872,8 +872,8 @@ def build_main_sheet(ws):
     # ── Row 2: Thông tin dự án ───────────────────────────────
     ws.merge_cells("A2:K2")
     c = ws["A2"]
-    c.value = (f"Du an: Bao mat Ho so Y te bang Zero Trust (ZTNA + IAM)  |  "
-               f"Nhom: 52300267 - 52300268  |  GVHD: ThS. Bui Quy Anh  |  "
+    c.value = (f"Du an: Bao mat Ho so Y te bang Zero Trust (ZTNA + IAM) - Du An CNTT  |  "
+               f"Nhom: 52300267 - 52300268  |  GVHD: TS. Bui Quy Anh  |  "
                f"Ngay tao: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
     c.font = Font(name="Calibri", size=10, italic=True, color="ECEFF1")
     c.fill = hex_fill("263238")
@@ -1146,7 +1146,9 @@ def build_checklist_sheet(ws):
 #  MAIN
 # ══════════════════════════════════════════════════════════════
 def main():
-    output_file = "ZeroTrust_TestCases_Toan_Dien.xlsx"
+    import os
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_file = os.path.join(script_dir, "ZeroTrust_TestCases_Toan_Dien.xlsx")
     print("Dang tao file Excel bo Test Case (v2 - co cot Giai thich Zero Trust)...")
 
     wb = Workbook()

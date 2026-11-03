@@ -2,11 +2,11 @@
 """
 =============================================================================
   KỊCH BẢN DEMO TOÀN DIỆN HỆ THỐNG ZERO TRUST HOSPITAL
-  Đồ án: Bảo mật Hồ sơ Y tế Điện tử bằng Kiến trúc Zero Trust (ZTNA + IAM)
+  Dự án: Bảo mật Hồ sơ Y tế Điện tử bằng Kiến trúc Zero Trust (ZTNA + IAM)
   Sinh viên thực hiện:
     - Huỳnh Nguyễn Quốc Việt  - MSSV: 52300267
     - Nguyễn Hoàng Việt        - MSSV: 52300268
-  Giảng viên hướng dẫn: ThS. Bùi Qúy Anh
+  Giảng viên hướng dẫn: TS. Bùi Quy Anh
   Thư mục: SCRUM4
 =============================================================================
 """
@@ -30,11 +30,11 @@ def generate_markdown(output_path):
 ---
 
 - **Đơn vị:** Đại học Tôn Đức Thắng (TDTU) – Khoa Công nghệ Thông tin
-- **Đồ án chuyên ngành:** Đồ án Tốt nghiệp / Đồ án CNTT (Khóa 2026 – 2027)
+- **Dự án:** Dự Án CNTT (Khóa 2026 – 2027)
 - **Sinh viên thực hiện:**
   - **Huỳnh Nguyễn Quốc Việt** (MSSV: 52300267) – Phụ trách: Kiến trúc ZTNA, Gateway Pomerium, Identity Keycloak, SIEM Wazuh
   - **Nguyễn Hoàng Việt** (MSSV: 52300268) – Phụ trách: Hạ tầng Proxmox VE, OpenEMR RBAC, MariaDB TDE, PKI Easy-RSA
-- **Giảng viên hướng dẫn:** ThS. Bùi Qúy Anh
+- **Giảng viên hướng dẫn:** TS. Bùi Quy Anh
 - **Thời lượng dự kiến:** 20 – 25 phút
 - **Vị trí lưu trữ:** `DU_AN_CNTT/SCRUM4/`
 
@@ -496,7 +496,7 @@ Nếu xảy ra tình huống bất khả kháng trong buổi trình diễn thự
 
 ## LỜI KẾT & THÔNG ĐIỆP BẢO VỆ ĐỒ ÁN
 
-> *"Kính thưa Hội đồng và Quý Thầy Cô, qua 6 phân đoạn trình diễn trực tiếp trên hệ sinh thái thực tế, nhóm chúng em đã chứng minh một cách toàn diện rằng: Mô hình Zero Trust không phải là một khẩu hiệu lý thuyết, mà là một giải pháp kiến trúc khả thi, mạnh mẽ và cần thiết để bảo vệ hệ thống y tế hiện đại. Mọi yêu cầu truy cập từ thiết bị, danh tính cho đến từng bản ghi bệnh án đều được kiểm soát nghiêm ngặt theo các nguyên tắc 'Không bao giờ tin tưởng ngầm định', 'Quyền tối thiểu' và 'Luôn giả định bị xâm nhập'. Nhóm chúng em xin chân thành cảm ơn Thầy Bùi Qúy Anh đã tận tình hướng dẫn và xin kính mời Hội đồng đặt câu hỏi đóng góp cho đồ án."*
+> *"Kính thưa Hội đồng và Quý Thầy Cô, qua 6 phân đoạn trình diễn trực tiếp trên hệ sinh thái thực tế, nhóm chúng em đã chứng minh một cách toàn diện rằng: Mô hình Zero Trust không phải là một khẩu hiệu lý thuyết, mà là một giải pháp kiến trúc khả thi, mạnh mẽ và cần thiết để bảo vệ hệ thống y tế hiện đại. Mọi yêu cầu truy cập từ thiết bị, danh tính cho đến từng bản ghi bệnh án đều được kiểm soát nghiêm ngặt theo các nguyên tắc 'Không bao giờ tin tưởng ngầm định', 'Quyền tối thiểu' và 'Luôn giả định bị xâm nhập'. Nhóm chúng em xin chân thành cảm ơn Thầy Bùi Quy Anh đã tận tình hướng dẫn và xin kính mời Hội đồng đặt câu hỏi đóng góp cho dự án."*
 
 ---
 """
@@ -560,7 +560,7 @@ def generate_docx(output_path):
     p_meta = doc.add_paragraph()
     p_meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run_m = p_meta.add_run("Sinh viên thực hiện: Huỳnh Nguyễn Quốc Việt (52300267) – Nguyễn Hoàng Việt (52300268)\n"
-                           "GVHD: ThS. Bùi Qúy Anh | Khóa: 2026 – 2027 | Địa điểm lưu trữ: SCRUM4")
+                           "GVHD: TS. Bùi Quy Anh | Dự Án CNTT (Khóa: 2026 – 2027) | Địa điểm lưu trữ: SCRUM4")
     run_m.font.name = "Calibri"
     run_m.font.size = Pt(10)
     run_m.font.italic = True
@@ -977,7 +977,7 @@ def generate_docx(output_path):
         "mà là một giải pháp kiến trúc khả thi, mạnh mẽ và cần thiết để bảo vệ hệ thống y tế hiện đại. "
         "Mọi yêu cầu truy cập từ thiết bị, danh tính cho đến từng bản ghi bệnh án đều được kiểm soát nghiêm ngặt theo các nguyên tắc "
         "'Không bao giờ tin tưởng ngầm định', 'Quyền tối thiểu' và 'Luôn giả định bị xâm nhập'. "
-        "Nhóm chúng em xin chân thành cảm ơn Thầy Bùi Qúy Anh đã tận tình hướng dẫn và xin kính mời Hội đồng đặt câu hỏi đóng góp cho đồ án."
+        "Nhóm chúng em xin chân thành cảm ơn Thầy Bùi Quy Anh đã tận tình hướng dẫn và xin kính mời Hội đồng đặt câu hỏi đóng góp cho dự án."
     )
     r_end.font.italic = True
     r_end.font.size = Pt(10)
