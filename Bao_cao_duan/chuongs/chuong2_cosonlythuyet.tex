@@ -19,7 +19,7 @@ Khung trưởng thành Zero Trust của Cơ quan An toàn An ninh mạng và H�
 
 Sơ đồ kiến trúc tổng thể thể hiện mối quan hệ tương tác giữa 4 vùng thành phần chính: Vùng người dùng (Users/Devices), Vùng điều khiển truy cập (Access Control), Vùng ứng dụng \& dữ liệu (App \& Database), và Vùng giám sát an ninh (Security Monitoring).
 
-Tạo tầng gác cổng uỷ quyền danh tính (Identity-Aware Proxy - Pomerium): Khi bác sĩ, y tá hay nhân viên y tế truy cập từ thiết bị đầu cuối, luồng kết nối không đi trực tiếp vào máy chủ y tế mà bắt buộc phải trỏ tới Pomerium Access Gateway đóng vai trò Policy Enforcement Point (PEP). Pomerium kiểm tra chứng chỉ số cá thể (Client Certificate) được cài sẵn trên thiết bị thông qua giao thức mTLS để xác định thiết bị có thuộc danh sách được bệnh viện cấp phép hay không.
+Tạo tầng gác cổng uỷ quyền danh tính (Identity-Aware Proxy - Pomerium): Khi bác sĩ, kỹ thuật viên xét nghiệm hay nhân viên y tế truy cập từ thiết bị đầu cuối, luồng kết nối không đi trực tiếp vào máy chủ y tế mà bắt buộc phải trỏ tới Pomerium Access Gateway đóng vai trò Policy Enforcement Point (PEP). Pomerium kiểm tra chứng chỉ số cá thể (Client Certificate) được cài sẵn trên thiết bị thông qua giao thức mTLS để xác định thiết bị có thuộc danh sách được bệnh viện cấp phép hay không.
 
 Tích hợp xác thực danh tính tập trung (Keycloak IdP): Khi kết nối mTLS hợp lệ, Pomerium chuyển hướng giao diện đăng nhập về Keycloak qua giao thức OIDC. Người dùng nhập tên tài khoản, mật khẩu và bắt buộc hoàn thành bước xác thực đa yếu tố (MFA) bằng việc nhập mã OTP từ ứng dụng Google Authenticator. Sau khi xác thực thành công, Keycloak trả về ID Token và Access Token chứa danh sách các vai trò (Roles) của người dùng.
 
@@ -57,7 +57,7 @@ Luồng nghiệp vụ BF-01 (Tiếp nhận bệnh nhân và tạo lượt khám)
 
 Luồng nghiệp vụ BF-02 (Khám bệnh, ghi chú lâm sàng và chẩn đoán): Bác sĩ xem danh sách lượt khám được phân công tại phòng khám. Bác sĩ mở hồ sơ bệnh nhân để xem tiền sử bệnh, thực hiện khám lâm sàng, nhập ghi chú diễn biến bệnh và cập nhật chẩn đoán y khoa. Bác sĩ chỉ được phép tạo và cập nhật ghi chú lâm sàng/chẩn đoán cho các bệnh nhân và lượt khám mà mình trực tiếp phụ trách.
 
-Luồng nghiệp vụ BF-03 (Chỉ định và xử lý kết quả xét nghiệm): Trong quá trình khám, Bác sĩ khởi tạo chỉ định xét nghiệm (chỉ định cận lâm sàng). Y tá hoặc Nhân viên xét nghiệm tiếp nhận chỉ định trên hệ thống, tiến hành lấy mẫu, thực hiện xét nghiệm và nhập kết quả xét nghiệm tương ứng. Sau khi kết quả được chốt, Bác sĩ quay lại xem kết quả xét nghiệm để hoàn thiện chẩn đoán. Nhân viên xét nghiệm chỉ được cập nhật kết quả xét nghiệm cho đúng chỉ định được giao và không được sửa chẩn đoán của Bác sĩ.
+Luồng nghiệp vụ BF-03 (Chỉ định và xử lý kết quả xét nghiệm): Trong quá trình khám, Bác sĩ khởi tạo chỉ định xét nghiệm (chỉ định cận lâm sàng). Kỹ thuật viên xét nghiệm tiếp nhận chỉ định trên hệ thống, tiến hành lấy mẫu, thực hiện xét nghiệm và nhập kết quả xét nghiệm tương ứng. Sau khi kết quả được chốt, Bác sĩ quay lại xem kết quả xét nghiệm để hoàn thiện chẩn đoán. Kỹ thuật viên xét nghiệm chỉ được cập nhật kết quả xét nghiệm cho đúng chỉ định được giao và không được sửa chẩn đoán của Bác sĩ.
 
 Luồng nghiệp vụ BF-04 (Khai thác và trích xuất hồ sơ bệnh án): Nhân viên quản lý hồ sơ tiếp nhận yêu cầu trích xuất hồ sơ từ bệnh nhân hoặc cơ quan chức năng có thẩm quyền. Nhân viên tìm kiếm và xem hồ sơ bệnh án, thực hiện xuất file tài liệu y tế theo đúng phạm vi lý do được cấp phép. Nhân viên quản lý hồ sơ chỉ có quyền đọc và xuất file; tuyệt đối không có quyền chỉnh sửa thông tin chuyên môn y tế.
 
@@ -112,13 +112,13 @@ Ghi chú quy ước trong bảng: `Có`: Quyền được cấp mặc định th
 
 \textbf{Tại sao lựa chọn sử dụng Pomerium:} Pomerium là giải pháp Access Proxy độc lập hoạt động theo kiến trúc Zero Trust (ZTNA), cho phép kiểm tra quyền truy cập ở cấp độ HTTP/HTTPS request dựa trên danh tính người dùng được trả về từ IdP mà không cần cài đặt VPN client phức tạp.
 
-\textbf{Mục đích sử dụng cụ thể:} Pomerium đóng vai trò là trạm gác Policy Enforcement Point (PEP) đứng trước hệ thống y tế. Mọi luồng truy cập của bác sĩ, y tá hay quản trị viên từ bên ngoài hoặc mạng nội bộ bắt buộc phải đi qua Pomerium. Pomerium sẽ liên kết với Keycloak qua OIDC để xác thực danh tính, kiểm tra chứng chỉ thiết bị (mTLS) và áp dụng các chính sách Allow/Deny định tuyến truy cập vào ứng dụng.
+\textbf{Mục đích sử dụng cụ thể:} Pomerium đóng vai trò là trạm gác Policy Enforcement Point (PEP) đứng trước hệ thống y tế. Mọi luồng truy cập của bác sĩ, kỹ thuật viên xét nghiệm, nhân viên y tế hay quản trị viên từ bên ngoài hoặc mạng nội bộ bắt buộc phải đi qua Pomerium. Pomerium sẽ liên kết với Keycloak qua OIDC để xác thực danh tính, kiểm tra chứng chỉ thiết bị (mTLS) và áp dụng các chính sách Allow/Deny định tuyến truy cập vào ứng dụng.
 
 \subsubsection{Hệ thống Hồ sơ Y tế Điện tử OpenEMR}
 
 \textbf{Tại sao lựa chọn sử dụng OpenEMR:} OpenEMR là phần mềm quản lý phòng khám và hồ sơ bệnh án điện tử mã nguồn mở được chứng nhận chuẩn ONC Complete EHR, cung cấp đầy đủ các chức năng nghiệp vụ y tế thực tế và cho phép tùy biến phân quyền mạnh mẽ.
 
-\textbf{Mục đích sử dụng cụ thể:} OpenEMR đóng vai trò là ứng dụng nghiệp vụ lõi (Application Workload). Đây là nơi lưu trữ thông tin bệnh nhân, lượt khám, ghi chú lâm sàng, chẩn đoán và kết quả xét nghiệm. OpenEMR sẽ tiếp nhận luồng truy cập đã được Pomerium xác thực và áp dụng ma trận RBAC nội bộ để kiểm soát chi tiết quyền xem, sửa, tạo dữ liệu của từng bác sĩ và y tá.
+\textbf{Mục đích sử dụng cụ thể:} OpenEMR đóng vai trò là ứng dụng nghiệp vụ lõi (Application Workload). Đây là nơi lưu trữ thông tin bệnh nhân, lượt khám, ghi chú lâm sàng, chẩn đoán và kết quả xét nghiệm. OpenEMR sẽ tiếp nhận luồng truy cập đã được Pomerium xác thực và áp dụng ma trận RBAC nội bộ để kiểm soát chi tiết quyền xem, sửa, tạo dữ liệu của từng bác sĩ, kỹ thuật viên xét nghiệm và nhân viên y tế.
 
 \subsubsection{Hệ quản trị Cơ sở Dữ liệu MariaDB và Cơ chế Mã hóa Dữ liệu Lưu trữ}
 

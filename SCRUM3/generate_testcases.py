@@ -195,7 +195,7 @@ TEST_CASES = [
 
     ("GĐ2 – Keycloak IAM & Identity", 12,
      "5 vai trò nghiệp vụ được tạo đúng trong Realm",
-     "Kiểm tra Realm có đủ 5 roles: doctor, nurse, receptionist, records_staff, it_admin",
+     "Kiểm tra Realm có đủ các roles: doctor, lab, receptionist, records_staff, supervisor, it_admin",
      "Keycloak Admin Console → Realm Roles → xem danh sách",
      "Hiển thị đủ roles; không duplicate; tên đúng convention",
      "Identity – RBAC Role Definition", "Cao", "Chức năng",
@@ -253,9 +253,9 @@ TEST_CASES = [
 
     ("GĐ2 – Keycloak IAM & Identity", 17,
      "JWT Token chứa đúng role claim theo từng người dùng",
-     "Token doctor01 chứa role 'doctor'; token nurse01 chứa 'nurse'; không có role chéo",
+     "Token doctor01 chứa role 'doctor'; token lab_tech01 chứa 'lab'; không có role chéo",
      "Giải mã JWT Access Token sau đăng nhập thành công (dùng jwt.io hoặc python-jwt)",
-     "Payload: 'realm_access': {'roles': ['doctor']} cho doctor01; không có role 'nurse' hay 'it_admin'",
+     "Payload: 'realm_access': {'roles': ['doctor']} cho doctor01; không có role 'lab' hay 'it_admin'",
      "Identity – RBAC / Token Integrity", "Cao", "Chức năng",
      "Zero Trust sử dụng token claims làm cơ sở ra quyết định ủy quyền tại Pomerium (PEP). "
      "Nếu token bị lỗi chứa sai role (ví dụ receptionist nhận được claims 'doctor'), hệ thống "
@@ -265,8 +265,8 @@ TEST_CASES = [
     ("GĐ2 – Keycloak IAM & Identity", 18,
      "IT Admin quản lý tài khoản: tạo và vô hiệu hóa (không xóa)",
      "IT Admin tạo user mới và disable tài khoản; tài khoản bị disable không đăng nhập được",
-     "Keycloak Admin Console → tạo 'test_nurse' → disable → test_nurse cố đăng nhập",
-     "User tạo thành công; disable thành công (Enabled=false); test_nurse không đăng nhập được",
+     "Keycloak Admin Console → tạo 'test_user' → disable → test_user cố đăng nhập",
+     "User tạo thành công; disable thành công (Enabled=false); test_user không đăng nhập được",
      "Identity – Account Lifecycle / Least Privilege", "Trung bình", "Chức năng",
      "Quản lý vòng đời tài khoản (Account Lifecycle Management) là thành phần bắt buộc trong "
      "trụ cột Identity của Zero Trust. Nguyên tắc Least Privilege yêu cầu khi nhân viên nghỉ "
@@ -765,7 +765,7 @@ TEST_CASES = [
     ("GĐ7 – End-to-End & Tích hợp", 58,
      "Multi-user: 5 người dùng đồng thời, phiên độc lập, không session leak",
      "5 user đăng nhập đồng thời; mỗi phiên độc lập; không có dữ liệu chéo giữa các phiên",
-     "5 users (doctor01, nurse01, receptionist01, lab_tech01, records_staff01) đăng nhập đồng thời → kiểm tra dữ liệu từng phiên",
+     "5 users (doctor01, supervisor01, receptionist01, lab_tech01, records_staff01) đăng nhập đồng thời → kiểm tra dữ liệu từng phiên",
      "Mỗi phiên độc lập; không session collision; mỗi user chỉ thấy dữ liệu của mình; 5 events trong Wazuh",
      "Identity – Session Isolation / Multi-user Concurrency", "Cao", "End-to-End",
      "Session Isolation là yêu cầu bảo mật quan trọng trong môi trường multi-tenant: phiên làm "
