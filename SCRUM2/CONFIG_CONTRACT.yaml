@@ -1,0 +1,214 @@
+metadata:
+  task_id: P2-BOTH-01
+  name: Zero Trust Medical PoC Config Contract
+  baseline: Phase 2-3
+  effective_date: '2026-08-25'
+  review_deadline: '2026-08-26'
+  addressing: 10.10.x.x
+  source_of_truth: CONFIG_CONTRACT.xlsx / sheet 01_CONFIG_CONTRACT
+components:
+  client_devices:
+    hostname_pattern: client-<role>-<nn>
+    vlan: 10
+    subnet: 10.10.10.0/24
+    gateway: 10.10.10.1
+    ip: DHCP 10.10.10.100-200
+    ports:
+    - outbound tcp/443
+    - outbound tcp/8443
+    - tcp/1514 to wazuh
+    - tcp/1515 to wazuh
+    version:
+      wazuh_agent: 4.14.7
+      client_certificate: X.509 v3
+  pomerium:
+    hostname: zt-pomerium01
+    vlan: 20
+    subnet: 10.10.20.0/24
+    gateway: 10.10.20.1
+    ip: 10.10.20.10
+    ports:
+    - tcp/443
+    version: 0.32.9
+  keycloak:
+    hostname: zt-keycloak01
+    vlan: 30
+    subnet: 10.10.30.0/24
+    gateway: 10.10.30.1
+    ip: 10.10.30.10
+    ports:
+    - tcp/8443
+    version: 26.7.2
+  wazuh:
+    hostname: zt-wazuh01
+    vlan: 30
+    subnet: 10.10.30.0/24
+    gateway: 10.10.30.1
+    ip: 10.10.30.20
+    ports:
+    - tcp/443 dashboard
+    - tcp/1514 agent-events
+    - tcp/1515 enrollment
+    disabled_in_baseline:
+    - tcp/55000 api
+    version: 4.14.7
+  openemr:
+    hostname: emr-app01
+    vlan: 40
+    subnet: 10.10.40.0/24
+    gateway: 10.10.40.1
+    ip: 10.10.40.10
+    ports:
+    - tcp/443
+    disabled_in_baseline:
+    - tcp/80
+    version: 8.3.0
+  mariadb:
+    hostname: emr-db01
+    vlan: 50
+    subnet: 10.10.50.0/24
+    gateway: 10.10.50.1
+    ip: 10.10.50.10
+    ports:
+    - tcp/3306
+    version: 11.8.6 LTS
+  proxmox:
+    hostname: pve01
+    vlan: 60
+    subnet: 10.10.60.0/24
+    gateway: 10.10.60.1
+    ip: 10.10.60.10
+    ports:
+    - tcp/8006
+    - tcp/22 IT-admin-only
+    version: 9.2-1
+  internal_ca:
+    hostname: zt-ca01
+    vlan: 30
+    subnet: 10.10.30.0/24
+    gateway: 10.10.30.1
+    ip: 10.10.30.30
+    ports: []
+    version: X.509 v3
+    note: P2-BOTH-01 baseline decision; source documents did not assign CA hostname/IP.
+policy:
+  default_inter_zone: DENY
+  openemr_direct_from_client: DENY
+  mariadb_direct_from_client: DENY
+  pomerium_to_openemr: ALLOW tcp/443
+  openemr_to_mariadb: ALLOW tcp/3306
+
+  firewall_rules:
+    - id: FW-01
+      source: Client VLAN10
+      destination: Pomerium 10.10.20.10
+      protocol: TCP
+      port: 443
+      action: ALLOW
+      purpose: Truy cập hệ thống qua Zero Trust Gateway
+
+    - id: FW-02
+      source: Client VLAN10
+      destination: Keycloak 10.10.30.10
+      protocol: TCP
+      port: 8443
+      action: ALLOW
+      purpose: OIDC / MFA / đăng nhập
+
+    - id: FW-03
+      source: Client VLAN10
+      destination: OpenEMR 10.10.40.10
+      protocol: TCP
+      port: 443
+      action: DENY
+      purpose: Chặn bypass Pomerium
+
+    - id: FW-04
+      source: Pomerium 10.10.20.10
+      destination: Keycloak 10.10.30.10
+      protocol: TCP
+      port: 8443
+      action: ALLOW
+      purpose: OIDC / Authentication
+
+    - id: FW-05
+      source: Pomerium 10.10.20.10
+      destination: OpenEMR 10.10.40.10
+      protocol: TCP
+      port: 443
+      action: ALLOW
+      purpose: Authorized application traffic
+
+    - id: FW-06
+      source: OpenEMR 10.10.40.10
+      destination: MariaDB 10.10.50.10
+      protocol: TCP
+      port: 3306
+      action: ALLOW
+      purpose: Application kết nối database
+
+    - id: FW-07
+      source: Client / Other Zones
+      destination: MariaDB 10.10.50.10
+      protocol: TCP
+      port: 3306
+      action: DENY
+      purpose: Chặn truy cập trực tiếp database
+
+    - id: FW-08
+      source: Wazuh Agents
+      destination: Wazuh 10.10.30.20
+      protocol: TCP
+      port: 1514
+      action: ALLOW
+      purpose: Gửi log và security events
+
+    - id: FW-09
+      source: Wazuh Agents
+      destination: Wazuh 10.10.30.20
+      protocol: TCP
+      port: 1515
+      action: ALLOW
+      purpose: Agent enrollment
+
+    - id: FW-10
+      source: IT Admin
+      destination: Proxmox 10.10.60.10
+      protocol: TCP
+      ports:
+        - 8006
+        - 22
+      action: ALLOW
+      purpose: Quản trị Proxmox
+
+    - id: FW-11
+      source: Normal User
+      destination: Wazuh Dashboard 10.10.30.20
+      protocol: TCP
+      port: 443
+      action: DENY
+      purpose: Chỉ IT Admin được truy cập Wazuh Dashboard
+
+    - id: FW-12
+      source: IT Admin
+      destination: Keycloak 10.10.30.10
+      protocol: TCP
+      port: 8443
+      action: ALLOW
+      purpose: Quản trị tài khoản và role
+
+    - id: FW-13
+      source: IT Admin
+      destination: Wazuh Dashboard 10.10.30.20
+      protocol: TCP
+      port: 443
+      action: ALLOW
+      purpose: Security monitoring
+
+    - id: FW-14
+      source: Any unmatched inter-zone flow
+      destination: Any protected zone
+      protocol: ANY
+      port: ANY
+      action: DENY
+      purpose: Default deny

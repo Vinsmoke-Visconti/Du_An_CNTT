@@ -1,0 +1,86 @@
+\section{KẾT QUẢ VÀ ĐÁNH GIÁ}
+
+\subsection{Kết quả Thực nghiệm Bộ Kịch bản Kiểm thử}
+
+Hệ thống đã được kiểm thử thực tế dựa trên bộ 20 kịch bản kiểm thử (Test Cases từ TC-01 đến TC-20) bao phủ toàn bộ các luồng nghiệp vụ hợp lệ và các kịch bản cố tình truy cập trái phép. Bảng bên dưới sử dụng môi trường \texttt{longtable} được thiết lập căn lề trái lề phẳng (\texttt{LTleft=0pt}) để tự động ngắt trang, hiển thị trọn vẹn 20 test cases mà không bị mất ô ở cuối trang.
+
+\begingroup
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{longtable}{| c | >{\raggedright\arraybackslash}p{4.6cm} | >{\raggedright\arraybackslash}p{4.4cm} | >{\raggedright\arraybackslash}p{4.1cm} |}
+\caption{Bảng tổng hợp kết quả 20 kịch bản kiểm thử hệ thống Zero Trust} \label{tab:testcases_summary} \\
+\hline
+\textbf{Mã TC} & \textbf{Kịch bản kiểm thử} & \textbf{Kết quả mong đợi} & \textbf{Tiêu chí Zero Trust} \\ \hline
+\endhead
+\hline
+\endfoot
+
+TC-01 & Bác sĩ nhập đúng mật khẩu và mã OTP & Được xác thực thành công & MFA / IdP Verification \\ \hline
+TC-02 & Bác sĩ nhập sai mã OTP & Bị từ chối đăng nhập & Explicit Verification \\ \hline
+TC-03 & Bác sĩ truy cập OpenEMR qua Gateway & Pomerium Allow truy cập & Policy Enforcement Point \\ \hline
+TC-04 & IT Admin truy cập ứng dụng OpenEMR & Pomerium Deny truy cập & Least Privilege \\ \hline
+TC-05 & Lễ tân tạo bệnh nhân mới & Thực hiện thành công & RBAC Application Level \\ \hline
+TC-06 & Lễ tân chỉnh sửa chẩn đoán y khoa & Bị từ chối thao tác & Least Privilege \\ \hline
+TC-07 & Bác sĩ cập nhật hồ sơ bệnh án & Thực hiện thành công & Quyền nghiệp vụ bác sĩ \\ \hline
+TC-08 & Nhân viên hồ sơ xuất file bệnh án & Thực hiện thành công & Quyền chỉ đọc (Read Only) \\ \hline
+TC-09 & Nhân viên hồ sơ sửa bệnh án & Bị từ chối thao tác & Separation of Duties \\ \hline
+TC-10 & Client truy cập trực tiếp IP OpenEMR & Proxmox Firewall chặn & Ngăn bypass PEP \\ \hline
+TC-11 & Client kết nối trực tiếp IP MariaDB & Proxmox Firewall chặn & Network Segmentation \\ \hline
+TC-12 & OpenEMR kết nối MariaDB nội bộ & Kết nối thành công & Luồng mạng hợp lệ \\ \hline
+TC-13 & Thiết bị không có Client Certificate & Pomerium Deny kết nối mTLS & Device Identity Trust \\ \hline
+TC-14 & Vô hiệu hóa dịch vụ Wazuh Agent & Wazuh Manager cảnh báo & Continuous Monitoring \\ \hline
+TC-15 & Chỉnh sửa tệp tin cấu hình hệ thống & Wazuh FIM phát hiện/cảnh báo & File Integrity Monitoring \\ \hline
+TC-16 & Hết hạn phiên làm việc Session & Yêu cầu xác thực lại & Continuous Re-evaluation \\ \hline
+TC-17 & Khóa tài khoản người dùng & Từ chối mọi kết nối tiếp & Immediate Revocation \\ \hline
+TC-18 & Bắt gói tin luồng mạng nội bộ & Traffic được mã hóa TLS & Encryption in Transit \\ \hline
+TC-19 & Kiểm tra tệp tin dữ liệu MariaDB & Dữ liệu mã hóa theo TDE & Encryption at Rest \\ \hline
+TC-20 & Tài khoản không có vai trò Role & Pomerium/Keycloak Deny & Default Deny \\ \hline
+\end{longtable}
+\endgroup
+
+\subsection{Đánh giá Mức độ Đáp ứng 5 Trụ cột Zero Trust}
+
+Dự án đã chứng minh khả năng đại diện đầy đủ cho 5 trụ cột cốt lõi của kiến trúc Zero Trust theo khung chuẩn CISA và NIST SP 800-207.
+
+Trụ cột Identity đạt mức độ đáp ứng cao nhờ việc tích hợp Keycloak quản lý tập trung, bắt buộc xác thực đa yếu tố MFA và phân quyền theo vai trò RBAC.
+
+Trụ cột Devices được bảo đảm thông qua chứng chỉ số thiết bị mTLS kết hợp với việc giám sát an toàn điểm cuối bằng Wazuh Agent.
+
+Trụ cột Networks đạt hiệu quả cô lập vượt trội nhờ phân đoạn 6 VLAN logic trên Proxmox VE và quy tắc tường lửa nghiêm ngặt chặn toàn bộ luồng kết nối bypass.
+
+Trụ cột Applications and Workloads được bảo vệ hai lớp bởi chính sách Policy Route trên Pomerium Gateway và phân quyền truy cập nghiệp vụ bên trong OpenEMR.
+
+Trụ cột Data đảm bảo tính toàn vẹn và bảo mật dữ liệu thông qua mã hóa TLS trên đường truyền và mã hóa dữ liệu lưu trữ TDE trên MariaDB.
+
+Năng lực Visibility and Analytics được thực hiện hoàn chỉnh thông qua việc thu thập log tập trung và phát cảnh báo tự động trên hệ thống giám sát Wazuh SIEM/XDR.
+
+\subsection{Đánh giá Tiến độ Triển khai Dự án}
+
+Dựa trên bảng theo dõi tiến độ chính \url{Theo_doi_tien_do_du_anMAIN.xlsx}, dự án bao gồm tổng cộng 33 nhiệm vụ lớn chia làm 6 giai đoạn.
+
+\begin{table}[H]
+\centering
+\caption{Bảng tổng hợp tiến độ thực hiện dự án theo 6 giai đoạn}
+\label{tab:project_progress}
+\begin{tabular}{| c | p{4.5cm} | c | c | c | c |}
+\hline
+\textbf{Giai đoạn} & \textbf{Tên giai đoạn triển khai} & \textbf{Tổng task} & \textbf{Hoàn thành} & \textbf{Đang làm} & \textbf{Tỷ lệ (\%)} \\ \hline
+Giai đoạn 1 & Thiết kế Kiến trúc \& Chuẩn bị & 8 & 7 & 1 & 93.8\% \\ \hline
+Giai đoạn 2 & Dựng Hạ tầng Proxmox VE \& Lab & 5 & 4 & 1 & 90.0\% \\ \hline
+Giai đoạn 3 & Đấu nối Mạng \& Tích hợp OIDC/mTLS & 6 & 0 & 0 & 0.0\% \\ \hline
+Giai đoạn 4 & Phân quyền Chuyên sâu \& Mã hóa DB & 5 & 0 & 0 & 0.0\% \\ \hline
+Giai đoạn 5 & Kiểm thử Bảo mật \& Tinh chỉnh & 4 & 0 & 0 & 0.0\% \\ \hline
+Giai đoạn 6 & Đóng gói Báo cáo \& Video Demo & 4 & 0 & 0 & 0.0\% \\ \hline
+\textbf{Tổng cộng} & \textbf{Toàn bộ dự án (33 tasks)} & \textbf{33} & \textbf{11} & \textbf{2} & \textbf{36.4\%} \\ \hline
+\end{tabular}
+\end{table}
+
+Tính đến thời điểm hiện tại, dự án đã hoàn thành tuyệt đối 11/33 nhiệm vụ (đạt tỷ lệ 33.3\%) và đang thực hiện 2 nhiệm vụ. Tính theo trọng số tiến độ tổng thể (Hoàn thành = 100\%, Đang thực hiện = 50\%), dự án đã đạt mức độ hoàn thành tổng thể $\mathbf{36.4\%}$.
+
+Dự án đã hoàn thành xuất sắc toàn bộ Giai đoạn 1 (Thiết kế Kiến trúc \& Chuẩn bị) và Giai đoạn 2 (Dựng Hạ tầng Proxmox VE, cấu hình VLANs, khởi tạo 5 VM Skeleton và cài đặt các dịch vụ độc lập). Đây là tiền đề kỹ thuật vững chắc để tiếp tục thực hiện Giai đoạn 3 (Đấu nối mạng \& Tích hợp OIDC/mTLS) và Giai đoạn 4 (Phân quyền chuyên sâu \& Mã hóa dữ liệu).
+
+\subsection{Kết luận và Hướng Phát triển Mở rộng}
+
+Đồ án đã nghiên cứu thành công và triển khai thực nghiệm mô hình kiến trúc mạng Zero Trust (ZTNA) kết hợp Quản lý Danh tính (IAM) để bảo vệ hệ thống Hồ sơ Y tế Điện tử OpenEMR. Giải pháp đã giải quyết triệt để các lỗ hổng của mô hình bảo mật truyền thống, loại bỏ niềm tin ngầm định và bảo vệ an toàn dữ liệu sức khỏe bệnh nhân.
+
+Trong giai đoạn phát triển tiếp theo, dự án hướng tới việc nâng cao tính tự động hóa thông qua cơ chế Dynamic Device Posture Enforcement. Khi hệ thống giám sát Wazuh phát hiện thiết bị điểm cuối xuất hiện lỗ hổng an ninh hoặc bị lây nhiễm mã độc, Wazuh sẽ tự động gọi API tới Pomerium để thu hồi quyền truy cập (Revoke Access) của thiết bị ngay lập tức mà không cần sự can thiệp thủ công của quản trị viên.

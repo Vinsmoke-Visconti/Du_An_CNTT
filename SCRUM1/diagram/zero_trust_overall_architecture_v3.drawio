@@ -1,0 +1,202 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0" pages="2">
+  <diagram id="zt-architecture" name="Zero Trust Architecture">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#2563eb;strokeWidth=1.6;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;USER / DEVICE&lt;/b&gt;&lt;br&gt;&lt;p dir=&quot;auto&quot; style=&quot;white-space: pre-wrap;&quot;&gt;Workstation bệnh viện / trình duyệt&lt;br/&gt;Client Certificate + thông tin xác thực người dùng&lt;br/&gt;Trust input: danh tính + trạng thái thiết bị + ngữ cảnh yêu cầu&lt;/p&gt;" vertex="1">
+          <mxGeometry height="125" width="350" x="650" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="pom" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=2;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;POMERIUM&lt;/b&gt;&lt;br&gt;Zero Trust Access Proxy&lt;br&gt;&lt;b&gt;PEP&lt;/b&gt; – Policy Enforcement Point&lt;br&gt;Client mTLS / Token &amp;amp; Policy Enforcement&lt;br&gt;&lt;br&gt;&lt;b&gt;Endpoint:&lt;/b&gt; HTTPS 443" vertex="1">
+          <mxGeometry height="150" width="300" x="1155" y="639.94" as="geometry" />
+        </mxCell>
+        <mxCell id="pillars" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1;fontSize=11;align=center;verticalAlign=top;spacing=8;" value="&lt;p dir=&quot;auto&quot; style=&quot;white-space: pre-wrap;&quot;&gt;&lt;strong&gt;CISA ZERO TRUST MATURITY MODEL (ZTMM) – 5 TRỤ CỘT&lt;/strong&gt;&lt;/p&gt;&lt;ol dir=&quot;auto&quot;&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Identity (Danh tính)&lt;/strong&gt; → Keycloak, MFA, RBAC, OIDC&lt;/li&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Devices (Thiết bị)&lt;/strong&gt; → Client Certificate / đầu vào tin cậy thiết bị; giám sát Wazuh&lt;/li&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Networks (Mạng)&lt;/strong&gt; → VLAN, phân đoạn giữa các zone, Default DENY&lt;/li&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Applications &amp;amp; Workloads (Ứng dụng &amp;amp; Workload)&lt;/strong&gt; → Chính sách Pomerium + phân quyền OpenEMR&lt;/li&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Data (Dữ liệu)&lt;/strong&gt; → MariaDB, mã hóa khi lưu trữ/truyền tải, least privilege&lt;/li&gt;&lt;/ol&gt;" vertex="1">
+          <mxGeometry height="200" width="450" x="1080" y="917.5" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1;fontSize=10;align=left;verticalAlign=top;spacing=8;" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Framework roles&lt;/b&gt;&lt;/div&gt;&lt;p dir=&quot;auto&quot; style=&quot;white-space: pre-wrap;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;NIST SP 800-207&lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;: kiến trúc / nguyên tắc Zero Trust / mối quan hệ PEP–PDP.&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;CISA ZTMM&lt;/b&gt;: năm trụ cột được thể hiện trên sơ đồ này.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="85" width="440" x="50" y="1115" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#16a34a;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pom" value="&lt;b&gt;1&lt;/b&gt; Access Request&lt;br&gt;HTTPS 443 + mTLS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1295.05" y="222.48" />
+              <mxPoint x="1295.05" y="580" />
+              <mxPoint x="1305" y="580" />
+            </Array>
+            <mxPoint x="1335" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="deny" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1;fontSize=10;align=left;verticalAlign=top;spacing=8;" value="&lt;div&gt;&lt;div&gt;&lt;p dir=&quot;auto&quot; style=&quot;white-space: pre-wrap;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;THỰC THI ZERO TRUST&lt;/strong&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;Default DENY giữa các zone mạng.&lt;/li&gt;&lt;li&gt;Client không bao giờ truy cập trực tiếp OpenEMR / MariaDB.&lt;/li&gt;&lt;li&gt;Chỉ các luồng được ủy quyền rõ ràng mới được phép.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;section&gt;&lt;/section&gt;&lt;div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="440" x="580" y="1090" as="geometry" />
+        </mxCell>
+        <mxCell id="kDjz6PM_07axHCPPbkgG-2" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="65" width="840" x="455" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="kDjz6PM_07axHCPPbkgG-2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" value="BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST – SƠ ĐỒ KIẾN TRÚC TỔNG THỂ" vertex="1">
+          <mxGeometry height="40" width="840" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="kDjz6PM_07axHCPPbkgG-2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#475569;" value="NIST SP 800-207 aligned architecture  |  CISA ZTMM 5 Pillars  |  PoC trên Proxmox Private Cloud" vertex="1">
+          <mxGeometry height="25" width="840" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kDjz6PM_07axHCPPbkgG-3" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="280" width="815" x="145" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="dp" parent="kDjz6PM_07axHCPPbkgG-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f7fb;strokeColor=#94a3b8;strokeWidth=1.5;dashed=1;dashPattern=5 5;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacingTop=10;spacingLeft=12;" value="DATA PLANE" vertex="1">
+          <mxGeometry height="280" width="815" as="geometry" />
+        </mxCell>
+        <mxCell id="emr" parent="kDjz6PM_07axHCPPbkgG-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#1d4ed8;strokeWidth=2;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;OPENEMR&lt;/b&gt;&lt;br&gt;Medical Records Application&lt;br&gt;Application authorization / least privilege&lt;br&gt;&lt;br&gt;&lt;b&gt;Endpoint:&lt;/b&gt; HTTPS 443 (PoC) / internal service port as deployed" vertex="1">
+          <mxGeometry height="145" width="270" x="500" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="kDjz6PM_07axHCPPbkgG-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdf2f8;strokeColor=#be185d;strokeWidth=2;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;MARIADB&lt;/b&gt;&lt;br&gt;EMR Data Store&lt;br&gt;Patient / clinical data&lt;br&gt;&lt;br&gt;&lt;b&gt;Port:&lt;/b&gt; TCP 3306&lt;br&gt;&lt;b&gt;Access:&lt;/b&gt; OpenEMR only" vertex="1">
+          <mxGeometry height="145" width="250" x="110" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" parent="kDjz6PM_07axHCPPbkgG-3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1;fontSize=10;align=left;verticalAlign=top;spacing=8;" value="&lt;p dir=&quot;auto&quot; style=&quot;white-space: pre-wrap;&quot;&gt;Ranh giới PoC&lt;/p&gt;&lt;p dir=&quot;auto&quot; style=&quot;white-space: pre-wrap;&quot;&gt;Việc thu hồi phiên tự động khi trạng thái tin cậy thiết bị thay đổi không được nêu trong các tài liệu dự án hiện tại. Wazuh hiện đóng vai trò lớp giám sát/cảnh báo; Active Response tự động có thể được xem là phần mở rộng tùy chọn trong tương lai.&lt;/p&gt;" vertex="1">
+          <mxGeometry height="95" width="565" x="152.5" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="kDjz6PM_07axHCPPbkgG-3" source="emr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#2563eb;" target="db" value="&lt;b&gt;8&lt;/b&gt; Clinical Data Query&lt;br&gt;TCP 3306">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="pom" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#2563eb;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="emr" value="&lt;b&gt;7&lt;/b&gt; Authorized Request&lt;br&gt;HTTPS">
+          <mxGeometry relative="1" x="0.0043" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1224.04" y="819.96" />
+              <mxPoint x="1030" y="819.96" />
+              <mxPoint x="1030" y="862.52" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kDjz6PM_07axHCPPbkgG-8" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="300.00000000000006" width="850" x="130" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="cp" parent="kDjz6PM_07axHCPPbkgG-8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f7fb;strokeColor=#94a3b8;strokeWidth=1.5;dashed=1;dashPattern=5 5;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacingTop=10;spacingLeft=12;" value="CONTROL PLANE" vertex="1">
+          <mxGeometry height="300" width="850" as="geometry" />
+        </mxCell>
+        <mxCell id="kc" parent="kDjz6PM_07axHCPPbkgG-8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eefdf3;strokeColor=#16a34a;strokeWidth=2;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;KEYCLOAK&lt;/b&gt;&lt;br&gt;Identity Provider (IdP)&lt;br&gt;OIDC / MFA / RBAC&lt;br&gt;&lt;br&gt;&lt;b&gt;Endpoint:&lt;/b&gt; HTTPS 8443 (PoC proposed)" vertex="1">
+          <mxGeometry height="135" width="260" x="150" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="pdp" parent="kDjz6PM_07axHCPPbkgG-8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#7c3aed;strokeWidth=2;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;POLICY ENGINE&lt;/b&gt;&lt;br&gt;&lt;b&gt;Logical PDP&lt;/b&gt; – Policy Decision Point&lt;br&gt;Evaluates identity, role, resource and context&lt;br&gt;&lt;br&gt;Decision: &lt;b&gt;ALLOW / DENY&lt;/b&gt;" vertex="1">
+          <mxGeometry height="135" width="270" x="535" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="wazuh" parent="kDjz6PM_07axHCPPbkgG-8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;strokeWidth=2;fontSize=12;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" value="&lt;b&gt;WAZUH MANAGER&lt;/b&gt;&lt;br&gt;SIEM / Security Monitoring&lt;br&gt;Audit, alerting, correlation, response&lt;br&gt;&lt;br&gt;&lt;b&gt;Ports:&lt;/b&gt; 1514/TCP, 1515/TCP, 55000/TCP*" vertex="1">
+          <mxGeometry height="85" width="565" x="240" y="190.00000000000006" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="kDjz6PM_07axHCPPbkgG-8" source="kc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#ca8a04;dashed=1;dashPattern=6 4;endArrow=open;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="wazuh" value="&lt;b&gt;10&lt;/b&gt; Authentication / IAM Events">
+          <mxGeometry relative="1" x="0.3708" y="3" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="40" y="97.52" />
+              <mxPoint x="40" y="232.52" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#ca8a04;dashed=1;dashPattern=6 4;endArrow=open;" target="wazuh" value="&lt;b&gt;12&lt;/b&gt; DB / Host Security Events">
+          <mxGeometry relative="1" x="0.4419" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="370" y="709.97" />
+              <mxPoint x="465.03" y="709.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="emr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#ca8a04;dashed=1;dashPattern=6 4;endArrow=open;exitX=0.478;exitY=0.005;exitDx=0;exitDy=0;exitPerimeter=0;" value="&lt;b&gt;9&lt;/b&gt; Audit / Security Events">
+          <mxGeometry relative="1" x="0.3993" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="764.1099999999999" y="709.97" />
+              <mxPoint x="685.03" y="709.97" />
+            </Array>
+            <mxPoint x="805" y="824.94" as="sourcePoint" />
+            <mxPoint x="685" y="639.94" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="pom" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#ca8a04;dashed=1;dashPattern=6 4;endArrow=open;" target="wazuh" value="&lt;b&gt;11&lt;/b&gt; Access / Policy / Proxy Events">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="895.03" y="709.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="pom" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#7c3aed;" target="pdp" value="&lt;b&gt;5&lt;/b&gt; Policy Evaluation Request">
+          <mxGeometry relative="1" x="0.0005" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1065.03" y="669.97" />
+              <mxPoint x="1065.03" y="462.43" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="pdp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#7c3aed;" target="pom" value="&lt;b&gt;6&lt;/b&gt; Policy Decision&lt;br&gt;ALLOW / DENY">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1185.03" y="409.96999999999997" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="kc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#7c3aed;" target="pom" value="&lt;b&gt;4&lt;/b&gt; OIDC Token / Claims&lt;br&gt;role / identity context">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="485.1" y="340" />
+              <mxPoint x="1245" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#ca8a04;dashed=1;dashPattern=6 4;endArrow=open;" target="wazuh" value="&lt;b&gt;13&lt;/b&gt; Device Security Telemetry">
+          <mxGeometry relative="1" x="-0.1702" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="805" y="300" />
+              <mxPoint x="625.1" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#16a34a;" target="kc" value="&lt;b&gt;3&lt;/b&gt; MFA + Identity Authentication&lt;br&gt;Account / Password / OTP">
+          <mxGeometry relative="1" x="-0.2601" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="pom" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;endArrow=block;strokeColor=#16a34a;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.669;exitY=-0.002;exitDx=0;exitDy=0;exitPerimeter=0;" target="kc" value="&lt;b&gt;2&lt;/b&gt; OIDC / HTTPS&lt;br&gt;Authentication Redirect">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1355.71" y="600" />
+              <mxPoint x="1355" y="600" />
+              <mxPoint x="1355" y="120" />
+              <mxPoint x="345" y="120" />
+            </Array>
+            <mxPoint x="1315.06" y="630" as="sourcePoint" />
+            <mxPoint x="275" y="309.94" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="zt-parameters" name="Parameters &amp; Policies">
+    <mxGraphModel dx="1420" dy="1120" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t2" parent="1" vertex="1" value="BẢNG THÔNG SỐ / LUỒNG / POLICY CHO SƠ ĐỒ KIẾN TRÚC ZERO TRUST" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;">
+          <mxGeometry x="30" y="20" width="1320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="net" parent="1" vertex="1" value="&lt;b&gt;PoC NETWORK MAPPING (ĐỀ XUẤT – IP/VLAN KHÔNG ĐƯỢC CHỐT TRONG 3 TÀI LIỆU GỐC)&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;VLAN 10 – Client:&lt;/b&gt; 10.20.10.0/24, DHCP 10.20.10.100–200&lt;br&gt;&lt;b&gt;VLAN 20 – DMZ:&lt;/b&gt; 10.20.20.0/24, Pomerium 10.20.20.10 (static)&lt;br&gt;&lt;b&gt;VLAN 30 – Security:&lt;/b&gt; 10.20.30.0/24, Keycloak 10.20.30.10, Wazuh 10.20.30.20 (static)&lt;br&gt;&lt;b&gt;VLAN 40 – App:&lt;/b&gt; 10.20.40.0/24, OpenEMR 10.20.40.10 (static)&lt;br&gt;&lt;b&gt;VLAN 50 – DB:&lt;/b&gt; 10.20.50.0/24, MariaDB 10.20.50.10 (static)&lt;br&gt;&lt;b&gt;VLAN 60 – Management:&lt;/b&gt; 10.20.60.0/24, Proxmox 10.20.60.10 (static)&lt;br&gt;&lt;br&gt;&lt;i&gt;Gateway mẫu cho mỗi VLAN: 10.20.X.1&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1;fontSize=10;align=left;verticalAlign=top;spacing=8;">
+          <mxGeometry x="30" y="80" width="620" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="ports" parent="1" vertex="1" value="&lt;b&gt;ENDPOINT / PORTS&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Pomerium&lt;/b&gt;: TCP 443 – external access&lt;br&gt;&lt;b&gt;Keycloak&lt;/b&gt;: TCP 8443 – HTTPS/OIDC (PoC proposed)&lt;br&gt;&lt;b&gt;OpenEMR&lt;/b&gt;: TCP 443 (or 80/8080 only if the deployed PoC uses them internally)&lt;br&gt;&lt;b&gt;MariaDB&lt;/b&gt;: TCP 3306 – OpenEMR only&lt;br&gt;&lt;b&gt;Wazuh&lt;/b&gt;: TCP 1514 – agent communication; TCP 1515 – enrollment; TCP 55000 – API if used&lt;br&gt;&lt;br&gt;&lt;b&gt;mTLS location:&lt;/b&gt; Client/Device → Pomerium only.&lt;br&gt;&lt;b&gt;OIDC location:&lt;/b&gt; Pomerium ↔ Keycloak for authentication redirect/token exchange." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1;fontSize=10;align=left;verticalAlign=top;spacing=8;">
+          <mxGeometry x="680" y="80" width="620" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="seq" parent="1" vertex="1" value="&lt;b&gt;DETAILED ZERO TRUST REQUEST SEQUENCE&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;1.&lt;/b&gt; User/Device sends HTTPS request to Pomerium.&lt;br&gt;&lt;b&gt;2.&lt;/b&gt; Pomerium validates Client Certificate / mTLS.&lt;br&gt;&lt;b&gt;3.&lt;/b&gt; Pomerium redirects browser to Keycloak using OIDC/HTTPS.&lt;br&gt;&lt;b&gt;4.&lt;/b&gt; User authenticates with account/password + OTP (MFA).&lt;br&gt;&lt;b&gt;5.&lt;/b&gt; Keycloak returns authenticated identity / role claims to Pomerium.&lt;br&gt;&lt;b&gt;6.&lt;/b&gt; Pomerium policy engine (logical PDP) evaluates identity, role, device/context and target resource.&lt;br&gt;&lt;b&gt;7.&lt;/b&gt; PDP returns ALLOW or DENY; Pomerium enforces the result as PEP.&lt;br&gt;&lt;b&gt;8.&lt;/b&gt; Authorized request is proxied to OpenEMR.&lt;br&gt;&lt;b&gt;9.&lt;/b&gt; OpenEMR applies application-level authorization and accesses only required records.&lt;br&gt;&lt;b&gt;10.&lt;/b&gt; OpenEMR queries MariaDB over TCP 3306.&lt;br&gt;&lt;b&gt;11.&lt;/b&gt; Pomerium, Keycloak, OpenEMR, MariaDB/hosts and device agents send security/audit events to Wazuh.&lt;br&gt;&lt;b&gt;12.&lt;/b&gt; Wazuh correlates/alerts for monitoring and forensics.&lt;br&gt;&lt;b&gt;13.&lt;/b&gt; Optional future extension: Wazuh Active Response → isolate/block device or integrate with session revocation." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1f2937;strokeWidth=1.5;fontSize=12;align=center;verticalAlign=middle;spacing=8;">
+          <mxGeometry x="30" y="410" width="620" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="pol" parent="1" vertex="1" value="&lt;b&gt;MINIMUM INTER-ZONE POLICY&lt;/b&gt;&lt;br&gt;&lt;br&gt;Client → Pomerium: &lt;b&gt;ALLOW TCP 443&lt;/b&gt;&lt;br&gt;Client → OpenEMR: &lt;b&gt;DENY&lt;/b&gt;&lt;br&gt;Client → MariaDB: &lt;b&gt;DENY TCP 3306&lt;/b&gt;&lt;br&gt;Client → Keycloak/Wazuh: &lt;b&gt;DENY&lt;/b&gt; (except explicitly required admin flows)&lt;br&gt;Pomerium → Keycloak: &lt;b&gt;ALLOW OIDC/HTTPS&lt;/b&gt;&lt;br&gt;Pomerium → OpenEMR: &lt;b&gt;ALLOW HTTPS&lt;/b&gt;&lt;br&gt;OpenEMR → MariaDB: &lt;b&gt;ALLOW TCP 3306&lt;/b&gt;&lt;br&gt;All other DB sources → MariaDB: &lt;b&gt;DENY&lt;/b&gt;&lt;br&gt;Security/Monitoring → workloads: &lt;b&gt;only explicitly required management/agent traffic&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Firewall note:&lt;/b&gt; Inter-VLAN traffic is controlled by &lt;b&gt;Proxmox Firewall / Inter-zone Firewall – Default DENY&lt;/b&gt;." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#1f2937;strokeWidth=1.5;fontSize=12;align=center;verticalAlign=middle;spacing=8;">
+          <mxGeometry x="680" y="410" width="620" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="leg" parent="1" vertex="1" value="&lt;b&gt;LEGEND&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color:#16a34a&quot;&gt;&lt;b&gt;Green&lt;/b&gt;&lt;/span&gt; = identity/authentication flow&lt;br&gt;&lt;span style=&quot;color:#7c3aed&quot;&gt;&lt;b&gt;Purple&lt;/b&gt;&lt;/span&gt; = control/policy flow&lt;br&gt;&lt;span style=&quot;color:#2563eb&quot;&gt;&lt;b&gt;Blue&lt;/b&gt;&lt;/span&gt; = data/application flow&lt;br&gt;&lt;span style=&quot;color:#ca8a04&quot;&gt;&lt;b&gt;Gold dashed&lt;/b&gt;&lt;/span&gt; = telemetry/logging&lt;br&gt;&lt;b&gt;PEP&lt;/b&gt; = Policy Enforcement Point&lt;br&gt;&lt;b&gt;PDP&lt;/b&gt; = Policy Decision Point (logical policy engine)&lt;br&gt;&lt;b&gt;IdP&lt;/b&gt; = Identity Provider&lt;br&gt;&lt;b&gt;mTLS&lt;/b&gt; = Client/device certificate authentication to Pomerium&lt;br&gt;&lt;b&gt;OIDC&lt;/b&gt; = Authentication redirect / token-based identity flow with Keycloak" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1;fontSize=11;align=left;verticalAlign=top;spacing=8;">
+          <mxGeometry x="30" y="800" width="620" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="refs" parent="1" vertex="1" value="&lt;b&gt;DOCUMENT BASIS&lt;/b&gt;&lt;br&gt;&lt;br&gt;Business/architecture documents establish: Pomerium as Zero Trust access gateway; Keycloak for identity/MFA/RBAC; Wazuh for security monitoring; OpenEMR + MariaDB separated; Proxmox for segmented Private Cloud.&lt;br&gt;&lt;br&gt;&lt;b&gt;Source-derived:&lt;/b&gt; the roles and business flow above.&lt;br&gt;&lt;b&gt;Proposed for PoC:&lt;/b&gt; the 10.20.x.x addressing plan, VLAN IDs, and Keycloak/OpenEMR endpoint ports where not specified in the supplied documents." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1;fontSize=11;align=left;verticalAlign=top;spacing=8;">
+          <mxGeometry x="680" y="800" width="620" height="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

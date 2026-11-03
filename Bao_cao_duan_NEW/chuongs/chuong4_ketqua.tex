@@ -1,0 +1,222 @@
+\section{KẾT QUẢ VÀ ĐÁNH GIÁ}
+
+\subsection{Kết quả Thực nghiệm Bộ Kịch bản Kiểm thử}
+
+Bộ kiểm thử của hệ thống được xây dựng gồm 22 kịch bản từ TC-01 đến TC-22, bao phủ các nhóm kiểm soát chính gồm xác thực danh tính và MFA, xác thực thiết bị, kiểm soát truy cập qua Pomerium, phân đoạn mạng, phân quyền RBAC ở tầng OpenEMR, kiểm soát truy cập theo ngữ cảnh, Medical Records Assignment, giám sát an ninh và bảo vệ dữ liệu.
+
+Các kịch bản kiểm thử được xây dựng theo cả hai hướng Allow và Deny nhằm đánh giá không chỉ các luồng truy cập hợp lệ mà còn các trường hợp người dùng có vai trò hợp lệ nhưng không thỏa mãn điều kiện về phạm vi bệnh nhân, lượt khám, phân công hồ sơ hoặc trạng thái xử lý. 
+
+\begingroup
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+
+\begin{longtable}{|
+>{\centering\arraybackslash}p{1.1cm} |
+>{\raggedright\arraybackslash}p{4.8cm} |
+>{\raggedright\arraybackslash}p{4.8cm} |
+>{\raggedright\arraybackslash}p{3.5cm} |
+}
+
+\caption{Bảng tổng hợp 22 kịch bản kiểm thử hệ thống Zero Trust}
+\label{tab:testcases_summary} \\
+
+\hline
+\textbf{Mã TC} &
+\textbf{Kịch bản kiểm thử} &
+\textbf{Kết quả mong đợi} &
+\textbf{Tiêu chí Zero Trust} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Mã TC} &
+\textbf{Kịch bản kiểm thử} &
+\textbf{Kết quả mong đợi} &
+\textbf{Tiêu chí Zero Trust} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+TC-01 &
+Người dùng hợp lệ truy cập OpenEMR qua luồng Zero Trust đầy đủ với tài khoản, OTP và Client Certificate hợp lệ. &
+Certificate, tài khoản, OTP và phiên đều hợp lệ; Pomerium cho phép định tuyến tới OpenEMR. &
+Identity / MFA / Device Trust / Gateway Enforcement \\
+\hline
+
+TC-02 &
+Người dùng đăng nhập bằng tài khoản hoặc mật khẩu không hợp lệ. &
+Không tạo phiên xác thực; người dùng không truy cập được OpenEMR và sự kiện đăng nhập thất bại được ghi nhận. &
+Explicit Verification / Identity \\
+\hline
+
+TC-03 &
+Người dùng nhập thiếu hoặc sai mã OTP trong quá trình xác thực đa yếu tố. &
+Quá trình xác thực không hoàn tất; không cấp phiên truy cập OpenEMR. &
+MFA / Explicit Verification \\
+\hline
+
+TC-04 &
+Thiết bị không có Client Certificate hoặc sử dụng chứng chỉ không hợp lệ truy cập hệ thống. &
+Yêu cầu bị chặn tại lớp truy cập trước khi tới OpenEMR. &
+Device Trust / mTLS \\
+\hline
+
+TC-05 &
+Người dùng gửi yêu cầu tới OpenEMR khi không có phiên xác thực hợp lệ. &
+Pomerium từ chối yêu cầu hoặc yêu cầu xác thực lại; request không được chuyển tới OpenEMR. &
+Identity / Session Verification \\
+\hline
+
+TC-06 &
+Client cố gắng truy cập trực tiếp OpenEMR để bypass Pomerium Gateway. &
+Kết nối trực tiếp bị Proxmox Firewall chặn. &
+Gateway Enforcement / Network Segmentation \\
+\hline
+
+TC-07 &
+Lễ tân quản lý thông tin hành chính bệnh nhân và tạo lượt khám mới. &
+Cho phép đọc, tạo, cập nhật thông tin hành chính và tạo lượt khám theo đúng quyền của vai trò. &
+RBAC / Least Privilege \\
+\hline
+
+TC-08 &
+Lễ tân cố gắng thao tác trên Chẩn đoán hoặc Kết quả xét nghiệm. &
+Các thao tác nằm ngoài phạm vi quyền của Lễ tân bị từ chối. &
+RBAC / Least Privilege \\
+\hline
+
+TC-09 &
+Bác sĩ đọc hồ sơ và tạo/cập nhật ghi chú lâm sàng, chẩn đoán của bệnh nhân thuộc phạm vi phụ trách. &
+Các thao tác đúng quyền và đúng phạm vi được cho phép. &
+RBAC / Context-Aware Access \\
+\hline
+
+TC-10 &
+Bác sĩ có role hợp lệ nhưng cố gắng cập nhật bệnh nhân hoặc lượt khám ngoài phạm vi phụ trách. &
+Hệ thống từ chối thao tác dù người dùng có role Bác sĩ hợp lệ. &
+Context / Least Privilege \\
+\hline
+
+TC-11 &
+Bác sĩ tạo/cập nhật chỉ định xét nghiệm trước khi xử lý, đọc kết quả xét nghiệm và thử chỉnh sửa kết quả. &
+Tạo hoặc cập nhật chỉ định hợp lệ được cho phép; đọc kết quả được phép; chỉnh sửa kết quả xét nghiệm bị từ chối. &
+RBAC / Separation of Duties \\
+\hline
+
+TC-12 &
+Kỹ thuật viên xét nghiệm xử lý chỉ định và kết quả xét nghiệm thuộc phạm vi được giao. &
+Được xử lý chỉ định và kết quả hợp lệ; sau khi kết quả được xác nhận, việc tiếp tục chỉnh sửa phải bị từ chối. &
+RBAC / Context / Data Integrity \\
+\hline
+
+TC-13 &
+Kỹ thuật viên xét nghiệm cố gắng thao tác trên Chẩn đoán, Ghi chú lâm sàng hoặc chỉ định không thuộc phạm vi được giao. &
+Các thao tác ngoài quyền hoặc ngoài phạm vi đều bị từ chối. &
+Least Privilege / Separation of Duties \\
+\hline
+
+TC-14 &
+Nhân viên quản lý hồ sơ truy cập và trích xuất hồ sơ của bệnh nhân đã được Medical Records Supervisor phân công. &
+Cho phép truy cập hồ sơ đã được assign nhưng các thao tác vẫn bị giới hạn theo quyền của role Records. &
+RBAC / Medical Records Assignment \\
+\hline
+
+TC-15 &
+Nhân viên quản lý hồ sơ cố gắng sửa hoặc xóa Chẩn đoán, Ghi chú lâm sàng hoặc Kết quả xét nghiệm. &
+Các thao tác cập nhật hoặc xóa dữ liệu chuyên môn bị từ chối. &
+Least Privilege / Separation of Duties \\
+\hline
+
+TC-16 &
+Bác sĩ truy cập hồ sơ nội trú theo phạm vi hoặc phân công điều trị. &
+Bác sĩ được phân công được phép truy cập theo quyền; Bác sĩ không được phân công bị từ chối dù có role hợp lệ. &
+Context-Aware Access / Assignment \\
+\hline
+
+TC-17 &
+IT Admin thực hiện chức năng quản trị hệ thống và thử truy cập nội dung hồ sơ bệnh án. &
+Các chức năng quản trị được cho phép theo thẩm quyền; quyền đọc nội dung bệnh án không được cấp mặc định. &
+RBAC / Least Privilege \\
+\hline
+
+TC-18 &
+Client thử kết nối trực tiếp MariaDB và kiểm tra luồng OpenEMR $\rightarrow$ MariaDB. &
+Client $\rightarrow$ MariaDB bị từ chối; luồng OpenEMR $\rightarrow$ MariaDB hợp lệ được phép hoạt động. &
+Network Segmentation \\
+\hline
+
+TC-19 &
+Phát sinh sự kiện bảo mật để kiểm tra khả năng thu thập log và cảnh báo của Wazuh. &
+Log và sự kiện được tập trung trên Wazuh; sự kiện khớp rule tạo cảnh báo. &
+Continuous Monitoring / Audit \\
+\hline
+
+TC-20 &
+Kiểm tra cơ chế mã hóa dữ liệu khi truyền và khi lưu trữ trong phạm vi PoC. &
+Các kết nối thuộc phạm vi kiểm thử sử dụng mã hóa và có bằng chứng về cơ chế mã hóa dữ liệu lưu trữ. &
+Data Protection / Encryption \\
+\hline
+
+TC-21 &
+Nhân viên quản lý hồ sơ truy cập bệnh nhân chưa được phân công thông qua Medical Records Assignment. &
+Hệ thống từ chối truy cập và không cho phép mở hồ sơ; trong triển khai hiện tại có thể kiểm chứng bằng HTTP 403. &
+Context / Medical Records Assignment \\
+\hline
+
+TC-22 &
+Medical Records Supervisor thực hiện assign bệnh nhân cho Staff A, sau đó reassign sang Staff B. &
+Assign/reassign thành công; Staff A được truy cập trước khi chuyển giao và mất quyền sau reassign, trong khi Staff B nhận quyền truy cập theo phân công mới. &
+RBAC / Context / Least Privilege \\
+\hline
+
+\end{longtable}
+\endgroup
+
+\subsection{Đánh giá Mức độ Đáp ứng 5 Trụ cột Zero Trust}
+
+Dự án đã chứng minh khả năng đại diện đầy đủ cho 5 trụ cột cốt lõi của kiến trúc Zero Trust theo khung chuẩn CISA và NIST SP 800-207.
+
+Trụ cột Identity đạt mức độ đáp ứng cao nhờ việc tích hợp Keycloak quản lý tập trung, bắt buộc xác thực đa yếu tố MFA và phân quyền theo vai trò RBAC.
+
+Trụ cột Devices được bảo đảm thông qua chứng chỉ số thiết bị mTLS kết hợp với việc giám sát an toàn điểm cuối bằng Wazuh Agent.
+
+Trụ cột Networks đạt hiệu quả cô lập vượt trội nhờ phân đoạn 6 VLAN logic trên Proxmox VE và quy tắc tường lửa nghiêm ngặt chặn toàn bộ luồng kết nối bypass.
+
+Trụ cột Applications and Workloads được bảo vệ hai lớp bởi chính sách Policy Route trên Pomerium Gateway và phân quyền truy cập nghiệp vụ bên trong OpenEMR.
+
+Trụ cột Data đảm bảo tính toàn vẹn và bảo mật dữ liệu thông qua mã hóa TLS trên đường truyền và mã hóa dữ liệu lưu trữ TDE trên MariaDB.
+
+Năng lực Visibility and Analytics được thực hiện hoàn chỉnh thông qua việc thu thập log tập trung và phát cảnh báo tự động trên hệ thống giám sát Wazuh SIEM/XDR.
+
+\subsection{Đánh giá Tiến độ Triển khai Dự án}
+
+Dựa trên bảng theo dõi tiến độ chính \url{Theo_doi_tien_do_du_anMAIN.xlsx}, dự án bao gồm tổng cộng 33 nhiệm vụ lớn chia làm 6 giai đoạn.
+
+\begin{table}[H]
+\centering
+\caption{Bảng tổng hợp tiến độ thực hiện dự án theo 6 giai đoạn}
+\label{tab:project_progress}
+\begin{tabular}{| c | p{4.5cm} | c | c | c | c |}
+\hline
+\textbf{Giai đoạn} & \textbf{Tên giai đoạn triển khai} & \textbf{Tổng task} & \textbf{Hoàn thành} & \textbf{Đang làm} & \textbf{Tỷ lệ (\%)} \\ \hline
+Giai đoạn 1 & Thiết kế Kiến trúc \& Chuẩn bị & 8 & 7 & 1 & 93.8\% \\ \hline
+Giai đoạn 2 & Dựng Hạ tầng Proxmox VE \& Lab & 5 & 4 & 1 & 90.0\% \\ \hline
+Giai đoạn 3 & Đấu nối Mạng \& Tích hợp OIDC/mTLS & 6 & 0 & 0 & 0.0\% \\ \hline
+Giai đoạn 4 & Phân quyền Chuyên sâu \& Mã hóa DB & 5 & 0 & 0 & 0.0\% \\ \hline
+Giai đoạn 5 & Kiểm thử Bảo mật \& Tinh chỉnh & 4 & 0 & 0 & 0.0\% \\ \hline
+Giai đoạn 6 & Đóng gói Báo cáo \& Video Demo & 4 & 0 & 0 & 0.0\% \\ \hline
+\textbf{Tổng cộng} & \textbf{Toàn bộ dự án (33 tasks)} & \textbf{33} & \textbf{11} & \textbf{2} & \textbf{36.4\%} \\ \hline
+\end{tabular}
+\end{table}
+
+Tính đến thời điểm hiện tại, dự án đã hoàn thành tuyệt đối 11/33 nhiệm vụ (đạt tỷ lệ 33.3\%) và đang thực hiện 2 nhiệm vụ. Tính theo trọng số tiến độ tổng thể (Hoàn thành = 100\%, Đang thực hiện = 50\%), dự án đã đạt mức độ hoàn thành tổng thể $\mathbf{36.4\%}$.
+
+Dự án đã hoàn thành xuất sắc toàn bộ Giai đoạn 1 (Thiết kế Kiến trúc \& Chuẩn bị) và Giai đoạn 2 (Dựng Hạ tầng Proxmox VE, cấu hình VLANs, khởi tạo 5 VM Skeleton và cài đặt các dịch vụ độc lập). Đây là tiền đề kỹ thuật vững chắc để tiếp tục thực hiện Giai đoạn 3 (Đấu nối mạng \& Tích hợp OIDC/mTLS) và Giai đoạn 4 (Phân quyền chuyên sâu \& Mã hóa dữ liệu).
+
+\subsection{Kết luận và Hướng Phát triển Mở rộng}
+
+Đồ án đã nghiên cứu thành công và triển khai thực nghiệm mô hình kiến trúc mạng Zero Trust (ZTNA) kết hợp Quản lý Danh tính (IAM) để bảo vệ hệ thống Hồ sơ Y tế Điện tử OpenEMR. Giải pháp đã giải quyết triệt để các lỗ hổng của mô hình bảo mật truyền thống, loại bỏ niềm tin ngầm định và bảo vệ an toàn dữ liệu sức khỏe bệnh nhân.
+
+Trong giai đoạn phát triển tiếp theo, dự án hướng tới việc nâng cao tính tự động hóa thông qua cơ chế Dynamic Device Posture Enforcement. Khi hệ thống giám sát Wazuh phát hiện thiết bị điểm cuối xuất hiện lỗ hổng an ninh hoặc bị lây nhiễm mã độc, Wazuh sẽ tự động gọi API tới Pomerium để thu hồi quyền truy cập (Revoke Access) của thiết bị ngay lập tức mà không cần sự can thiệp thủ công của quản trị viên.

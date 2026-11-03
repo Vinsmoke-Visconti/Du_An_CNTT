@@ -1,0 +1,24 @@
+"Nghiên cứu và triển khai mô hình mạng Zero Trust (ZTNA) kết hợp quản lý danh tính (IAM) nhằm bảo mật hệ thống Hồ sơ Y tế Điện tử."
+1. Kiến trúc hệ thống (Zero Trust Architecture)
+Thay vì dùng VPN truyền thống (ai vào VPN là thấy toàn bộ mạng), bạn sẽ triển khai kiến trúc Identity-Aware Proxy (IAP).
+	•	Vùng Người dùng (Users): Bác sĩ, Y tá, Bệnh nhân truy cập từ mọi nơi (LAN bệnh viện, quán cafe, ở nhà). Mạng nội bộ lúc này được xem là "không an toàn" ngang với Internet.
+	•	Vùng Trung tâm định tuyến (Identity & Access Proxy): Đóng vai trò là trạm gác. Không ai được nói chuyện trực tiếp với máy chủ y tế. Mọi luồng mạng (traffic) phải đi qua Proxy này để kiểm tra danh tính.
+	•	Vùng Ứng dụng (App & DB): Máy chủ chứa OpenEMR (phần mềm y tế) và MySQL/PostgreSQL. Máy chủ này chặn mọi kết nối mạng (Drop All), CHỈ cho phép kết nối đến từ Access Proxy.
+2. Các công nghệ mã nguồn mở đề xuất
+Bạn có thể dùng các hệ thống mạnh mẽ sau để dựng Lab (trên VMware, VirtualBox hoặc EVE-NG):
+	•	Hệ thống Quản lý Danh tính (IdP/IAM): Dùng Keycloak hoặc Authentik. Cấu hình máy chủ này để quản lý toàn bộ User, tích hợp MFA (Google Authenticator/OTP) và định nghĩa các Nhóm quyền (RBAC).
+	•	Zero Trust Access Proxy: Dùng Pomerium hoặc Cloudflare Zero Trust (bản free) hoặc Nginx Proxy Manager. Proxy này sẽ liên kết với Keycloak qua giao thức OIDC/SAML.
+	•	Ứng dụng Y tế: Cài đặt OpenEMR (Mã nguồn mở quản lý phòng khám).
+	•	Mã hóa & Chứng chỉ (PKI): Dùng Easy-RSA tự dựng một Certificate Authority (CA) nội bộ để cấp phát chứng chỉ SSL/TLS, đảm bảo 100% traffic nội bộ đều là HTTPS.
+3. Chi tiết triển khai 3 trụ cột cốt lõi
+A. Trụ cột 1: Xác thực đa yếu tố (MFA) & Đăng nhập một lần (SSO)
+	•	Tích hợp ứng dụng OpenEMR với Keycloak.
+	•	Khi Bác sĩ gõ địa chỉ hệ thống, Access Proxy sẽ chặn lại và đẩy ra trang đăng nhập của Keycloak.
+	•	Bác sĩ nhập User/Password -> Keycloak yêu cầu nhập mã OTP trên điện thoại (MFA). Thiếu OTP thì dù lộ mật khẩu cũng không thể kết nối mạng tới ứng dụng.
+B. Trụ cột 2: Phân quyền dựa trên vai trò (RBAC) & Kiểm soát luồng mạng
+	•	Tạo 3 Role trong hệ thống: Doctor (Bác sĩ), Nurse (Y tá), IT_Admin.
+	•	Ở cấp độ Mạng (Proxy): Cấu hình policy sao cho chỉ Doctor và Nurse mới được phép định tuyến tới IP của máy chủ Y tế. IT_Admin chỉ được định tuyến tới máy chủ Monitor/Log, không được phép vào ứng dụng y tế.
+	•	Ở cấp độ Ứng dụng: Mapping Role từ Keycloak vào OpenEMR. Bác sĩ xem được toàn bộ bệnh án; Y tá chỉ xem được lịch hẹn và toa thuốc.
+C. Trụ cột 3: Mã hóa dữ liệu (Data Protection)
+	•	Trên đường truyền (Data in Transit): Không chỉ mã hóa HTTPS từ người dùng đến Proxy, mà phải mã hóa TLS từ Proxy đến Máy chủ Web, và từ Web đến Database. Nghĩa là nếu hacker gắn máy nghe lén (Sniffing/Wireshark) trong LAN cũng chỉ thấy cục dữ liệu đã mã hóa.
+	•	Tại nơi lưu trữ (Data at Rest): Cấu hình tính năng Transparent Data Encryption (TDE) trên MySQL/MariaDB của OpenEMR. Nghĩa là file .ibd chứa dữ liệu bệnh nhân lưu trên ổ cứng sẽ bị mã hóa bằng master key. Nếu hacker ăn cắp được cả cục ổ cứng vật lý mang về nhà cũng không thể đọc được dữ liệu.

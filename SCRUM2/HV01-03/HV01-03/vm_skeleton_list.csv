@@ -1,0 +1,6 @@
+VMID,Name,VLAN,vCPU,RAM_MB,Disk,net0,net1
+"100","emr-app01","40","2","2048","32G","virtio=BC:24:11:E1:21:2E,bridge=vmbr0,firewall=1","virtio=BC:24:11:5B:B2:43,bridge=vmbr1,firewall=1,tag=40"
+"101","zt-pomerium01","20","2","2048","32G","virtio=BC:24:11:D4:A7:C0,bridge=vmbr0,firewall=1","virtio=BC:24:11:D2:99:E2,bridge=vmbr1,firewall=1,tag=20"
+"102","zt-keycloak01","30","2","2048","32G","virtio=BC:24:11:D8:E3:8C,bridge=vmbr0,firewall=1","virtio=BC:24:11:7A:D0:EE,bridge=vmbr1,firewall=1,tag=30"
+"103","zt-wazuh01","30","2","2048","32G","virtio=BC:24:11:66:08:93,bridge=vmbr0,firewall=1","virtio=BC:24:11:DC:B2:30,bridge=vmbr1,firewall=1,tag=30"
+"104","emr-db01","50","2","2048","32G","virtio=BC:24:11:54:D9:06,bridge=vmbr0,firewall=1","virtio=BC:24:11:59:49:D6,bridge=vmbr1,firewall=1,tag=50"

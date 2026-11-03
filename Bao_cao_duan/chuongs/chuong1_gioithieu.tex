@@ -1,0 +1,39 @@
+\section{GIỚI THIỆU}
+
+\subsection{Đặt vấn đề và Tính cấp thiết của Đề tài}
+
+Trong kỷ nguyên chuyển đổi số hiện nay, các cơ sở y tế và bệnh viện đang tích cực số hóa hệ thống quản lý Hồ sơ Y tế Điện tử (EHR/EMR) nhằm nâng cao chất lượng khám chữa bệnh và tối ưu hóa quy trình vận hành. Dữ liệu y tế bao gồm thông tin cá nhân, lịch sử khám bệnh, chẩn đoán lâm sàng và kết quả xét nghiệm là loại dữ liệu cực kỳ nhạy cảm. Việc rò rỉ hoặc bị truy cập trái phép đối với dữ liệu y tế không chỉ ảnh hưởng nghiêm trọng đến quyền riêng tư của bệnh nhân mà còn gây ra những hậu quả pháp lý và uy tín lớn cho các tổ chức y tế.
+
+Mô hình bảo mật truyền thống dựa trên vùng biên (Perimeter-based Security) thường sử dụng Tường lửa (Firewall) và Mạng riêng ảo (VPN) để thiết lập ranh giới giữa mạng nội bộ và Internet. Mô hình này tồn tại một điểm yếu cốt tử là tin tưởng mặc định (Implicit Trust) đối với bất kỳ người dùng hoặc thiết bị nào đã kết nối thành công vào mạng nội bộ. Khi kẻ tấn công xâm nhập được vào mạng LAN hoặc tài khoản của nhân viên bị chiếm đoạt, kẻ tấn công có thể di chuyển ngang (Lateral Movement) để truy cập tự do vào các cơ sở dữ liệu y tế nhạy cảm.
+
+Để giải quyết triệt để hạn chế này, mô hình mạng Zero Trust Architecture (ZTA) được đề xuất như một chuẩn mực bảo mật thế hệ mới. Với nguyên tắc cốt lõi "Không tin tưởng mặc định, luôn luôn xác thực và kiểm tra", mô hình Zero Trust đòi hỏi mọi yêu cầu truy cập từ bất kỳ ai, từ bất kỳ thiết bị nào và từ bất kỳ vị trí mạng nào đều phải được xác thực danh tính, kiểm tra quyền hạn và mã hóa đường truyền một cách liên tục trước khi được phép kết nối tới ứng dụng y tế.
+
+\subsection{Mục tiêu của Đề tài}
+
+Nghiên cứu lý thuyết và kiến trúc mạng Zero Trust dựa trên khung chuẩn mực NIST SP 800-207 và Mô hình trưởng thành Zero Trust 5 trụ cột của CISA.
+
+Xây dựng và triển khai mô hình thử nghiệm (Proof of Concept - PoC) tích hợp hệ thống Quản lý Danh tính và Truy cập (IAM) với uỷ quyền nhận biết danh tính (Identity-Aware Proxy - IAP) để bảo vệ hệ thống Hồ sơ Y tế Điện tử OpenEMR.
+
+Triển khai cơ chế Xác thực đa yếu tố (MFA), Đăng nhập một lần (SSO), Kiểm soát truy cập dựa trên vai trò (RBAC), Nhận diện thiết bị tin cậy bằng chứng chỉ (mTLS), Giám sát an ninh điểm cuối (SIEM/XDR) và Mã hóa dữ liệu toàn vẹn trên đường truyền cũng như tại nơi lưu trữ.
+
+Đánh giá mức độ hiệu quả của giải pháp thông qua bộ kịch bản kiểm thử (Test Cases) thực tế, chứng minh khả năng ngăn chặn các hành vi truy cập trái phép và cố tình bypass cổng uỷ quyền bảo mật.
+
+\subsection{Phạm vi Nghiên cứu và Triển khai}
+
+Về mặt ứng dụng nghiệp vụ, đồ án tập trung thử nghiệm trên phần mềm quản lý phòng khám mã nguồn mở OpenEMR và cơ sở dữ liệu MariaDB.
+
+Về mặt hạ tầng, hệ thống được ảo hóa trên nền tảng Proxmox VE với việc phân chia 6 vùng mạng ảo (VLAN) logic nhằm cô lập hoàn toàn vùng ứng dụng và cơ sở dữ liệu khỏi mạng truy cập của người dùng.
+
+Về mặt giải pháp bảo mật, đề tài tập trung triển khai bộ công cụ mã nguồn mở gồm Keycloak đóng vai trò IdP, Pomerium đóng vai trò Access Gateway (PEP), Easy-RSA quản lý CA nội bộ cấp phát Client Certificate, và Wazuh đóng vai trò SIEM/XDR theo dõi security posture của điểm cuối.
+
+\subsection{Cấu trúc của Báo cáo}
+
+Báo cáo dự án được trình bày thống nhất trong 4 chương chính.
+
+Chương 1 trình bày tổng quan về đặt vấn đề, tính cấp thiết, mục tiêu nghiên cứu, phạm vi triển khai PoC và cấu trúc nội dung đồ án.
+
+Chương 2 phân tích chi tiết cơ sở lý thuyết về mô hình Zero Trust, 5 trụ cột CISA, sơ đồ kiến trúc tổng thể, luồng nghiệp vụ chi tiết và ma trận phân quyền RBAC.
+
+Chương 3 chi tiết hóa quá trình thực nghiệm, bao gồm quy hoạch sơ đồ mạng 6 VLAN, thiết kế hợp đồng cấu hình (Config Contract), phân đoạn mạng Proxmox, xây dựng 5 máy chủ ảo và cấu hình tích hợp các thành phần bảo mật.
+
+Chương 4 tổng hợp kết quả đạt được qua bộ kịch bản kiểm thử, đánh giá mức độ đáp ứng các tiêu chuẩn bảo mật, phân tích tiến độ thực hiện và định hướng phát triển tiếp theo.

@@ -1,0 +1,140 @@
+<mxfile host="app.diagrams.net" modified="2026-08-22T01:45:00.000Z" agent="ChatGPT" version="24.7.17" type="device">
+  <diagram id="ZT-MED-NET" name="Zero Trust Medical Network">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST TRÊN NỀN TẢNG CLOUD&#10;Sơ đồ mạng PoC – VLAN / Subnet / IP / Port / Firewall Policy" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#1f2937;" vertex="1" parent="1">
+          <mxGeometry x="40" y="25" width="1250" height="75" as="geometry"/>
+        </mxCell>
+
+        <!-- Zone containers -->
+        <mxCell id="zoneClient" value="UNTRUSTED / CLIENT ZONE&#10;VLAN 10 – 10.20.10.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f4f6;strokeColor=#6b7280;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="300" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="zoneDMZ" value="DMZ ZONE&#10;VLAN 20 – 10.20.20.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="390" y="140" width="300" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="zoneSec" value="SECURITY / MANAGEMENT ZONE&#10;VLAN 30 – 10.20.30.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#7c3aed;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="740" y="140" width="330" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="zoneApp" value="INTERNAL APP ZONE&#10;VLAN 40 – 10.20.40.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="140" width="300" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="zoneDB" value="DB ZONE&#10;VLAN 50 – 10.20.50.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="140" width="300" height="700" as="geometry"/>
+        </mxCell>
+
+        <!-- Client nodes -->
+        <mxCell id="doctor" value="&lt;b&gt;Bác sĩ PC&lt;/b&gt;&lt;br&gt;10.20.10.11&lt;br&gt;Client Certificate + Wazuh Agent&lt;br&gt;HTTPS 443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#374151;strokeWidth=1.5;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="230" width="220" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="staff" value="&lt;b&gt;Staff / Clerk PC&lt;/b&gt;&lt;br&gt;10.20.10.12&lt;br&gt;Client Certificate + Wazuh Agent&lt;br&gt;HTTPS 443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#374151;strokeWidth=1.5;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="380" width="220" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="admin" value="&lt;b&gt;IT Admin PC&lt;/b&gt;&lt;br&gt;10.20.10.13&lt;br&gt;Admin workstation&lt;br&gt;HTTPS 443 / SSH 22*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#374151;strokeWidth=1.5;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="530" width="220" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="internet" value="&lt;b&gt;Internet / External&lt;/b&gt;&lt;br&gt;Untrusted source&lt;br&gt;TCP 443 only to Pomerium" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;strokeWidth=2;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="675" width="220" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- DMZ -->
+        <mxCell id="fwEdge" value="&lt;b&gt;Perimeter Firewall&lt;/b&gt;&lt;br&gt;Default DENY" style="shape=hexagon;perimeter=hexagonPerimeter;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#b91c1c;strokeWidth=2;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="425" y="240" width="230" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="pomerium" value="&lt;b&gt;Pomerium Gateway / PEP&lt;/b&gt;&lt;br&gt;10.20.20.10&lt;br&gt;TCP 443 HTTPS / mTLS&lt;br&gt;Zero Trust Access Proxy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#ea580c;strokeWidth=2;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="420" y="400" width="240" height="125" as="geometry"/>
+        </mxCell>
+        <mxCell id="dmzNotes" value="Ingress: TCP 443 only&#10;No direct Client → OpenEMR / DB / Keycloak / Wazuh&#10;Pomerium enforces policy before app access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#f59e0b;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="600" width="240" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Security -->
+        <mxCell id="keycloak" value="&lt;b&gt;Keycloak&lt;/b&gt;&lt;br&gt;10.20.30.10&lt;br&gt;TCP 8443 HTTPS&lt;br&gt;Identity / RBAC / MFA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#7c3aed;strokeWidth=2;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="780" y="245" width="250" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="wazuh" value="&lt;b&gt;Wazuh Manager&lt;/b&gt;&lt;br&gt;10.20.30.20&lt;br&gt;TCP/UDP 1514* · TCP 1515* · TCP 55000*&lt;br&gt;Monitoring / Alert / Audit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#7c3aed;strokeWidth=2;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="780" y="460" width="250" height="135" as="geometry"/>
+        </mxCell>
+        <mxCell id="secNotes" value="&lt;b&gt;Security controls&lt;/b&gt;&lt;br&gt;• Keycloak: identity + role + MFA&lt;br&gt;• Wazuh: logs / alerts / device monitoring&lt;br&gt;• No Internet exposure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#a78bfa;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="780" y="635" width="250" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- App -->
+        <mxCell id="openemr" value="&lt;b&gt;OpenEMR Web Server&lt;/b&gt;&lt;br&gt;10.20.40.10&lt;br&gt;TCP 443* / 80* / 8080*&lt;br&gt;Internal Application" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2563eb;strokeWidth=2;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1145" y="350" width="250" height="135" as="geometry"/>
+        </mxCell>
+        <mxCell id="appNotes" value="Direct Client access: DENY&#10;Only Pomerium → OpenEMR allowed&#10;OpenEMR → MariaDB only on TCP 3306" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#60a5fa;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1145" y="560" width="250" height="105" as="geometry"/>
+        </mxCell>
+
+        <!-- DB -->
+        <mxCell id="mariadb" value="&lt;b&gt;MariaDB&lt;/b&gt;&lt;br&gt;10.20.50.10&lt;br&gt;TCP 3306&lt;br&gt;EMR Data / TDE*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#059669;strokeWidth=2;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="390" width="200" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="dbNotes" value="&lt;b&gt;DB isolation&lt;/b&gt;&lt;br&gt;Allow: OpenEMR → MariaDB TCP 3306&lt;br&gt;Deny: Client / Pomerium / Internet → MariaDB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#34d399;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1515" y="570" width="215" height="115" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections -->
+        <mxCell id="e1" value="HTTPS 443 / mTLS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" edge="1" parent="1" source="internet" target="fwEdge">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="HTTPS 443" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" edge="1" parent="1" source="doctor" target="pomerium">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="HTTPS 443" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" edge="1" parent="1" source="staff" target="pomerium">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="Admin / Mgmt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeWidth=1.5;strokeColor=#6b7280;endArrow=block;" edge="1" parent="1" source="admin" target="fwEdge">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="HTTPS 443" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" edge="1" parent="1" source="fwEdge" target="pomerium">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="OIDC / HTTPS 8443" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" edge="1" parent="1" source="pomerium" target="keycloak">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="Policy / Token" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="keycloak" target="pomerium">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="HTTPS 443*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;" edge="1" parent="1" source="pomerium" target="openemr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="TCP 3306" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;" edge="1" parent="1" source="openemr" target="mariadb">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Wazuh logging -->
+        <mxCell id="e10" value="Security events / Agent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="openemr" target="wazuh">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="Security events / Agent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="keycloak" target="wazuh">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" value="Agent / Device logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="doctor" target="wazuh">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" value="Agent / Device logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="staff" target="wazuh">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Deny arrows -->
+        <mxCell id="deny1" value="DENY – direct access" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeWidth=2;strokeColor=#dc2626;fontColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="staff" target="openemr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="deny2" value="DENY – direct DB" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeWidth=2;strokeColor=#dc2626;fontColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="admin" target="mariadb">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Footer legend -->
+        <mxCell id="legend" value="&lt;b&gt;Legend / Assumptions&lt;/b&gt;&lt;br&gt;• IP/VLAN values are proposed PoC addressing (the source documents define components/zones but do not specify concrete IP addresses).&lt;br&gt;• * Port/protocol marked with * should be confirmed against the actual deployment configuration.&lt;br&gt;• Firewall policy principle: default DENY, then explicitly ALLOW only required flows.&lt;br&gt;• TLS/mTLS: shown where directly supported by the project documents; TLS 1.3 is not assumed unless configured/tested." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9fafb;strokeColor=#9ca3af;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="875" width="1730" height="105" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

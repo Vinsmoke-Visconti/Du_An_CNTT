@@ -1,0 +1,509 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram id="1hPdzF41m_KjVeyy3s5Y" name="zero_trust_medical_network_diagram_v3">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-77" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1f2937;" value="BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST TRÊN NỀN TẢNG CLOUD Sơ đồ mạng PoC – VLAN / Subnet / IP / Port / Firewall Policy" vertex="1">
+          <mxGeometry height="70" width="1443" x="1800.02" y="-1150" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-78" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontSize=11;align=center;verticalAlign=middle;" value="&lt;b&gt;QUY ƯỚC ĐÃ ĐỒNG BỘ:&amp;nbsp;&lt;/b&gt;&lt;div&gt;• Toàn bộ IP dùng dải 10.10.x.x (đồng nhất với Sơ đồ mạng)&amp;nbsp;&lt;/div&gt;&lt;div&gt;• Client dùng DHCP; server/VM dùng Static IP&amp;nbsp;&lt;/div&gt;&lt;div&gt;• Thêm VLAN 60 – Proxmox Management&amp;nbsp;&lt;/div&gt;&lt;div&gt;• mTLS chỉ thể hiện ở Client → Pomerium; Internet → Firewall chỉ HTTPS 443&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="500" x="2750.015625" y="-1079.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-79" parent="1" style="shape=mxgraph.networks.cloud;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fef2f2;strokeColor=#dc2626;" value="Internet / External Untrusted" vertex="1">
+          <mxGeometry height="91.03" width="460" x="2065.015625" y="-921.0265625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-80" parent="1" style="shape=mxgraph.networks.router;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#f3f4f6;strokeColor=#4b5563;" value="Edge Router WAN / Routing" vertex="1">
+          <mxGeometry height="103.81" width="245" x="2735.015625" y="-979.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-81" parent="1" style="shape=mxgraph.networks.firewall;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.8;fillColor=#fee2e2;strokeColor=#b91c1c;" value="" vertex="1">
+          <mxGeometry height="110" width="190" x="3070.015625" y="-919.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-82" parent="1" style="shape=mxgraph.networks.switch;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#e0f2fe;strokeColor=#0369a1;" value="" vertex="1">
+          <mxGeometry height="110" width="190" x="3075.015625" y="-729.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-83" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-79" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;exitX=0.993;exitY=0.73;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-80" value="HTTPS 443">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-84" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-81" value="WAN">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-85" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#b91c1c;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-82" value="Inter-zone routing / filtering">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-86" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-91" value="VLAN 30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2650.015625" y="-649.9965625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-87" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#4f46e5;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-109" value="VLAN 60">
+          <mxGeometry relative="1" x="-0.1716" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="3140.015625" y="-589.9665625" />
+              <mxPoint x="3000.0856249999997" y="-589.9665625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-88" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9ca3af;fontSize=11;align=left;verticalAlign=middle;" value="&lt;div&gt;&lt;p dir=&quot;auto&quot; style=&quot;text-align: center;&quot;&gt;&lt;b&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;CHÚ GIẢI (LEGEND)&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🖥 Biểu tượng Device/VM = endpoint hoặc server&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🔀 Switch = Proxmox vSwitch / cầu nối hỗ trợ VLAN&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🧱 Firewall = Proxmox Firewall / phân đoạn giữa các zone&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🔵 Nét liền xanh dương = ALLOW / Authentication / Application Access&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🟢 Nét liền xanh lá = Data Flow / Database&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🟣 Nét đứt tím = Logs / Security Telemetry&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🔴 Nét đứt đỏ = DENY / Blocked Traffic&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;🟠 Nét liền cam = External / Network Infrastructure&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;* = phụ thuộc cấu hình PoC cuối cùng; không khẳng định trừ khi đã triển khai.&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="174.49" width="580" x="2050.02" y="-1095.52" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-89" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#4b5563;" value="PoC addressing proposal. IPs/VLANs are design values, not implementation facts from the source documents. Client addressing is DHCP; static IPs are reserved for infrastructure/VMs. VLAN 60 separates Proxmox management from application/data traffic." vertex="1">
+          <mxGeometry height="40" width="1150" x="2030.015625" y="590.0034375" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-99" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#6b7280;endArrow=block;fontStyle=1" target="7DGryhYYoJN_tTkDn_Sx-124" value="VLAN 10">
+          <mxGeometry relative="1" x="-0.4025" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2810.115625" y="-709.9965625" />
+              <mxPoint x="2810.115625" y="-789.9965625" />
+              <mxPoint x="1780.015625" y="-789.9965625" />
+              <mxPoint x="1780.015625" y="-409.9965625" />
+              <mxPoint x="1720.015625" y="-409.9965625" />
+              <mxPoint x="1720.015625" y="570.0034375" />
+              <mxPoint x="1890.015625" y="570.0034375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-100" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-102" value="VLAN 20">
+          <mxGeometry relative="1" x="0.3287" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2737.605625" y="-674.9965625" />
+              <mxPoint x="2737.605625" y="-739.9665625" />
+              <mxPoint x="2070.015625" y="-739.9665625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-101" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="320.07" width="210" x="1960.015625" y="-699.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-102" parent="7DGryhYYoJN_tTkDn_Sx-101" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#fff7ed;strokeColor=#ea580c;" value="DMZ ZONE VLAN 20 – 10.10.20.0/24&amp;nbsp;&lt;div&gt;GW 10.10.20.1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="320.07" width="210" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-103" parent="7DGryhYYoJN_tTkDn_Sx-102" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fff7ed;strokeColor=#ea580c;" value="" vertex="1">
+          <mxGeometry height="108.13175675675674" width="168" x="21" y="69.99797297297297" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-104" parent="7DGryhYYoJN_tTkDn_Sx-102" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=middle;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Firewall policy: Client → Pomerium 443 ALLOW Internet → Firewall 443 only Client → Internal IPs DENY&lt;/font&gt;" vertex="1">
+          <mxGeometry height="103.80648648648648" width="168" x="21" y="200.0018918918919" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-105" parent="7DGryhYYoJN_tTkDn_Sx-102" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;font&gt;Pomerium Gateway&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font&gt;10.10.20.10 (Static)&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font&gt;HTTPS 443 /&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;mTLS&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;Role: Zero Trust PEP&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="91.03" width="150" x="30" y="83.33" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-108" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="330" width="350" x="2850.015625" y="-529.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-109" parent="7DGryhYYoJN_tTkDn_Sx-108" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#eef2ff;strokeColor=#4f46e5;" value="PROXMOX MANAGEMENT ZONE VLAN 60 – 10.10.60.0/24&amp;nbsp;&lt;div&gt;GW 10.10.60.1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="215.07" width="350" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-110" parent="7DGryhYYoJN_tTkDn_Sx-108" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eef2ff;strokeColor=#4f46e5;" value="" vertex="1">
+          <mxGeometry height="106.20310344827587" width="160.16949152542372" x="44.49152542372881" y="83.44448275862061" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-111" parent="7DGryhYYoJN_tTkDn_Sx-108" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#818cf8;fontSize=11;align=center;verticalAlign=middle;" value="VLAN 60 chỉ dành cho quản trị hạ tầng; không dùng cho user/application traffic." vertex="1">
+          <mxGeometry height="106.20310344827587" width="124.57627118644068" x="213.5593220338983" y="85.13758620689657" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-112" parent="7DGryhYYoJN_tTkDn_Sx-108" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(26, 26, 26);&quot;&gt;&lt;b&gt;Proxmox VE / Admin&amp;nbsp;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(26, 26, 26);&quot;&gt;10.10.60.10 (Static) HTTPS 8006 / SSH 22* Management&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="88.8" width="140" x="54.58" y="100.85" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-113" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="350" width="220" x="3045.015625" y="-119.99656249999998" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-114" parent="7DGryhYYoJN_tTkDn_Sx-113" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#ecfdf5;strokeColor=#059669;" value="DB ZONE VLAN 50 – 10.10.50.0/24&amp;nbsp;&lt;div&gt;GW 10.10.50.1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="350.00000000000006" width="220.00000000000003" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-115" parent="7DGryhYYoJN_tTkDn_Sx-113" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ecfdf5;strokeColor=#059669;" value="" vertex="1">
+          <mxGeometry height="112.1794871794872" width="176" x="22" y="67.3076923076923" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-116" parent="7DGryhYYoJN_tTkDn_Sx-113" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#34d399;fontSize=11;align=left;verticalAlign=middle;" value="DB policy: OpenEMR → MariaDB:3306 ALLOW Other sources → 3306 DENY No direct Client access" vertex="1">
+          <mxGeometry height="103.20512820512822" width="176" x="22" y="210.8974358974359" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-117" parent="7DGryhYYoJN_tTkDn_Sx-113" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;MariaDB&amp;nbsp;&lt;/b&gt;&lt;div&gt;10.10.50.10 (Static) TCP 3306 only&amp;nbsp;&lt;/div&gt;&lt;div&gt;Role: EMR Database&lt;/div&gt;" vertex="1">
+          <mxGeometry height="67.57" width="140" x="40" y="100.00000000000006" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-118" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="320.07000000000005" width="187.35" x="2410.015625" y="100.00343750000002" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-119" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-95" value="Logs / Security Events">
+          <mxGeometry relative="1" x="-0.5169" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1751.0856250000002" y="1632.0434375" />
+              <mxPoint x="1751.0856250000002" y="1215.6234375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-120" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;" target="7DGryhYYoJN_tTkDn_Sx-115" value="TCP 3306 – DB only">
+          <mxGeometry relative="1" x="-0.7006" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1861.015625" y="1675.5534375" />
+              <mxPoint x="1861.015625" y="1535.5534375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-121" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-103" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;exitX=0.999;exitY=0.618;exitDx=0;exitDy=0;exitPerimeter=0;" value="HTTPS 443 / 80* – Authorized App Traffic">
+          <mxGeometry relative="1" x="0.2233" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1291.065625" y="859.9034375" />
+              <mxPoint x="1291.065625" y="1625.5734375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-123" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="615" width="200" x="1850.015625" y="-102.42656250000005" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-124" parent="7DGryhYYoJN_tTkDn_Sx-123" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#f3f4f6;strokeColor=#6b7280;" value="CLIENT / UNTRUSTED ZONE VLAN 10 – 10.10.10.0/24&lt;div&gt;GW 10.10.10.1&lt;/div&gt;&lt;div&gt;Client PCs: Doctor / Staff / Laboratory / Medical Records / IT Admin&lt;/div&gt;" vertex="1">
+          <mxGeometry height="615" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-125" parent="7DGryhYYoJN_tTkDn_Sx-123" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;container=0;" value="" vertex="1">
+          <mxGeometry height="105" width="150" x="20" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-126" parent="7DGryhYYoJN_tTkDn_Sx-123" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;container=0;" value="" vertex="1">
+          <mxGeometry height="105" width="140" x="30" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-127" parent="7DGryhYYoJN_tTkDn_Sx-123" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;container=0;" value="" vertex="1">
+          <mxGeometry height="105" width="150" x="25" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-128" parent="7DGryhYYoJN_tTkDn_Sx-123" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;IT Admin PC&amp;nbsp;&lt;/b&gt;&lt;div&gt;&lt;b&gt;DHCP / reservation&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Management access by policy HTTPS 443 / SSH 22*&lt;/div&gt;" vertex="1">
+          <mxGeometry height="88.8" width="187.35" x="-70" y="142.43" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-129" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;entryX=0.412;entryY=1.005;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.665;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-110" value="DENY – management isolated">
+          <mxGeometry relative="1" x="0.1553" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2409" y="422.4200000000001" />
+              <mxPoint x="2409" y="24.420000000000073" />
+              <mxPoint x="2960.06" y="24.420000000000073" />
+            </Array>
+            <mxPoint x="1960.015625" y="290.0034375" as="sourcePoint" />
+            <mxPoint x="3054.5071504237285" y="-233.51084821428594" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-130" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-115" value="DENY – no direct DB access">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1945.015625" y="570.0034375" />
+              <mxPoint x="2920.115625" y="570.0034375" />
+              <mxPoint x="2920.115625" y="270.0034375" />
+              <mxPoint x="3280.015625" y="270.0034375" />
+              <mxPoint x="3280.015625" y="3.4034374999999955" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-131" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;entryX=0.012;entryY=0.314;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-103" value="HTTPS 443 / mTLS">
+          <mxGeometry relative="1" x="0.1544" y="6" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1740.03" y="374.76" />
+              <mxPoint x="1740.03" y="-260" />
+              <mxPoint x="1919" y="-260" />
+              <mxPoint x="1919" y="-300" />
+              <mxPoint x="1860.03" y="-300" />
+              <mxPoint x="1860.03" y="-596" />
+            </Array>
+            <mxPoint x="1870.015625" y="374.8034375" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-134" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;exitX=0.678;exitY=1.007;exitDx=0;exitDy=0;exitPerimeter=0;" value="DENY – no direct access">
+          <mxGeometry relative="1" x="0.4781" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="862.735625" y="1805.5534375" />
+              <mxPoint x="1261.015625" y="1805.5534375" />
+              <mxPoint x="1261.015625" y="1665.5534375" />
+            </Array>
+            <mxPoint x="881.015625" y="1725.5234375" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-137" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.653;exitY=1.022;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-114" value="VLAN 50">
+          <mxGeometry relative="1" x="0.7138" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="3199.105625" y="-599.9665625" />
+              <mxPoint x="3260.015625" y="-599.9665625" />
+              <mxPoint x="3260.015625" y="-159.9665625" />
+              <mxPoint x="3155.0456249999997" y="-159.9665625" />
+            </Array>
+            <mxPoint x="4100.015625" y="-332.4965625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-138" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="350" width="245" x="2525.015625" y="64.48343750000004" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-139" parent="7DGryhYYoJN_tTkDn_Sx-138" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#eff6ff;strokeColor=#2563eb;" value="INTERNAL APP ZONE VLAN 40 – 10.10.40.0/24&amp;nbsp;&lt;div&gt;GW 10.10.40.1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="350" width="245" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-140" parent="7DGryhYYoJN_tTkDn_Sx-138" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eff6ff;strokeColor=#2563eb;" value="" vertex="1">
+          <mxGeometry height="107.75862068965519" width="196" x="24.5" y="80.00275862068963" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-141" parent="7DGryhYYoJN_tTkDn_Sx-138" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#60a5fa;fontSize=11;align=left;verticalAlign=middle;" value="App policy: Pomerium → OpenEMR ALLOW Client → OpenEMR DENY Direct bypass blocked" vertex="1">
+          <mxGeometry height="99.13793103448276" width="196" x="24.5" y="220.0041379310345" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-142" parent="7DGryhYYoJN_tTkDn_Sx-138" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;OpenEMR Web Server&lt;/b&gt; 10.10.40.10 (Static)&amp;nbsp;&lt;div&gt;HTTPS 443 / HTTP 80*&amp;nbsp;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Role: Medical Record Application&lt;/span&gt;&lt;pre class=&quot;overflow-visible! px-0!&quot;&gt;&lt;div class=&quot;relative w-full mt-4 mb-1&quot;&gt;&lt;div class=&quot;&quot;&gt;&lt;div class=&quot;contents&quot;&gt;&lt;div class=&quot;relative&quot;&gt;&lt;div class=&quot;h-full min-h-0 min-w-0&quot;&gt;&lt;div class=&quot;h-full min-h-0 min-w-0&quot;&gt;&lt;div class=&quot;border border-token-border-light border-radius-3xl corner-superellipse/1.1 rounded-3xl&quot;&gt;&lt;div class=&quot;h-full w-full border-radius-3xl bg-(--code-block-surface) corner-superellipse/1.1 overflow-clip rounded-3xl [--code-block-surface:var(--bg-elevated-secondary)] dark:[--code-block-surface:var(--composer-surface-primary)] lxnfua_clipPathFallback&quot;&gt;&lt;div class=&quot;relative&quot;&gt;&lt;div class=&quot;pe-11 pt-3&quot;&gt;&lt;div class=&quot;relative z-0 flex max-w-full&quot;&gt;&lt;div id=&quot;code-block-viewer&quot; dir=&quot;ltr&quot; class=&quot;q9tKkq_viewer cm-editor z-10 light:cm-light dark:cm-light flex h-full w-full flex-col items-stretch ͼs ͼ16&quot;&gt;&lt;div class=&quot;cm-scroller&quot;&gt;&lt;pre class=&quot;cm-content q9tKkq_readonly m-0 PDq2pG_selectionAnchorContainer&quot;&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;PDq2pG_selectionAnchor&quot;&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;&quot;&gt;&lt;div class=&quot;&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="88.8" width="187.35" x="28.82" y="98.96" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-143" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-140" value="HTTPS 443 / 80* – Authorized App Traffic">
+          <mxGeometry relative="1" x="-0.7371" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2439" y="-570" />
+              <mxPoint x="2439" y="163.97" />
+              <mxPoint x="2440" y="163.97" />
+              <mxPoint x="2440" y="198.39" />
+            </Array>
+            <mxPoint x="2150.015625" y="-569.9965625" as="sourcePoint" />
+            <mxPoint x="3870.015625" y="450.0034375" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-144" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;entryX=-0.006;entryY=0.825;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.736;exitY=0.993;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-140" value="DENY – no direct access">
+          <mxGeometry relative="1" x="0.4392" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1980.39" y="530" />
+              <mxPoint x="2880.08" y="530" />
+              <mxPoint x="2880.08" y="440" />
+              <mxPoint x="2440" y="440" />
+              <mxPoint x="2440" y="233.39" />
+            </Array>
+            <mxPoint x="2050.015625" y="500.0034375" as="sourcePoint" />
+            <mxPoint x="4080.015625" y="1062.0034375" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-146" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="7DGryhYYoJN_tTkDn_Sx-139" value="VLAN 40">
+          <mxGeometry relative="1" x="-0.1464" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="3170" y="-560" />
+              <mxPoint x="3220" y="-560" />
+              <mxPoint x="3220" y="-200" />
+              <mxPoint x="2990" y="-200" />
+              <mxPoint x="2990" y="44.48000000000002" />
+              <mxPoint x="2647.5" y="44.48000000000002" />
+            </Array>
+            <mxPoint x="3220.025625" y="-619.9965625" as="sourcePoint" />
+            <mxPoint x="2770.015625" y="171.82343749999995" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-147" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-140" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;exitX=0.996;exitY=0.825;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.001;entryY=0.597;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-115" value="TCP 3306 – DB only">
+          <mxGeometry relative="1" x="-0.3556" as="geometry">
+            <mxPoint y="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="2820.015625" y="199.00343750000002" />
+              <mxPoint x="3020.015625" y="200.00343750000002" />
+              <mxPoint x="3020.015625" y="14.313437499999964" />
+            </Array>
+            <mxPoint x="2960.015625" y="1748.4034375" as="sourcePoint" />
+            <mxPoint x="2840.015625" y="1150.4034375" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-148" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Staff / Clerk /&amp;nbsp;Laboratory /&lt;br/&gt;Medical Records&amp;nbsp;PC DHCP&lt;/b&gt;: 10.10.10.100–200 Client Certificate + Wazuh Agent HTTPS 443 / mTLS" vertex="1">
+          <mxGeometry height="120" width="185" x="1760.015625" y="200.0334375" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-149" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Bác sĩ PC DHCP&lt;/b&gt;: 10.10.10.100–200 Client Certificate + Wazuh Agent HTTPS 443 / mTLS" vertex="1">
+          <mxGeometry height="81.47" width="150" x="1760.015625" y="400.0034375" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-150" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Proxmox vSwitch / VLAN-aware Bridge" vertex="1">
+          <mxGeometry height="67.57" width="140" x="3085.015625" y="-719.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-151" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Proxmox Firewall Inter-zone Firewall Default DENY" vertex="1">
+          <mxGeometry height="67.57" width="168" x="3081.015625" y="-889.9965625" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-152" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-126" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.003;exitY=0.07;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-103" value="HTTPS 443 / mTLS">
+          <mxGeometry relative="1" x="-0.0056" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1760.03" y="169.86" />
+              <mxPoint x="1760.03" y="-210" />
+              <mxPoint x="1939" y="-210" />
+              <mxPoint x="1939" y="-330" />
+              <mxPoint x="1890.03" y="-330" />
+              <mxPoint x="1890.03" y="-575.93" />
+            </Array>
+            <mxPoint x="1850.015625" y="170.00343750000002" as="sourcePoint" />
+            <mxPoint x="1930.015625" y="-549.9965625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-91" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#f5f3ff;strokeColor=#7c3aed;" value="SECURITY ZONE VLAN 30 – 10.10.30.0/24 GW 10.10.30.1" vertex="1">
+          <mxGeometry height="541.98" width="310" x="2489" y="-557.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-92" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#a78bfa;fontSize=11;align=left;verticalAlign=middle;fontStyle=0;container=0;" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Security policy:&lt;/b&gt;&lt;/div&gt;&lt;div&gt;- Client/Browser → Keycloak: &lt;b&gt;ALLOW&lt;/b&gt; TCP 8443 / HTTPS – OIDC / MFA&lt;/div&gt;&lt;div&gt;- Normal User/Browser → Wazuh Dashboard: &lt;b&gt;DENY&lt;/b&gt;&lt;/div&gt;&lt;div&gt;- IT Admin → Keycloak: ALLOW – Admin / Identity Management&lt;b&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;- IT Admin → Wazuh Dashboard: &lt;b&gt;ALLOW&lt;/b&gt; by management policy&lt;/div&gt;&lt;div&gt;- Pomerium → Keycloak: &lt;b&gt;ALLOW&lt;/b&gt;&lt;/div&gt;&lt;div&gt;- Agents → Wazuh Manager: &lt;b&gt;ALLOW&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="135.82" width="275.28" x="2506.36" y="-165.51999999999998" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-94" parent="1" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;fontStyle=0;container=0;" value="" vertex="1">
+          <mxGeometry height="113.14655172413792" width="214.41176470588235" x="2536.7941176470586" y="-465.5175862068965" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-96" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;fontStyle=0" target="7DGryhYYoJN_tTkDn_Sx-95" value="Logs / Security Events">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-97" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;container=0;" value="&lt;b&gt;Keycloak&lt;/b&gt; 10.10.30.10 (Static) HTTPS 8443&amp;nbsp;&lt;div&gt;MFA / OIDC / RBAC&lt;/div&gt;&lt;div&gt;Role: Identity Provider (IdP)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="81.47" width="184.0909090909091" x="2551.950935828877" y="-449.67758620689654" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-107" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-103" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;exitX=1.005;exitY=0.295;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-94" value="OIDC / HTTPS 8443 – Authentication Redirect">
+          <mxGeometry relative="1" x="-0.32" y="-1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2480.0299999999997" y="-598.14" />
+              <mxPoint x="2480.0299999999997" y="-435.52" />
+            </Array>
+            <mxPoint x="2148.815625" y="-619.9665625" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-132" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;fontColor=#1d4ed8;endArrow=block;exitX=0.999;exitY=0.31;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-94" value="ALLOW – Client/Browser → Keycloak: HTTPS 8443 / OIDC / MFA">
+          <mxGeometry relative="1" x="0.5911" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2319" y="385.11" />
+              <mxPoint x="2319" y="-95.61" />
+              <mxPoint x="2159" y="-95.61" />
+              <mxPoint x="2159" y="-305.61" />
+              <mxPoint x="2039" y="-305.61" />
+              <mxPoint x="2039" y="-335.61" />
+              <mxPoint x="2480" y="-335.61" />
+              <mxPoint x="2480" y="-385.53" />
+            </Array>
+            <mxPoint x="1960.615625" y="240.00343750000002" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lLNaNmVLa-In-2ylgruJ-2" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="113.14655172413791" width="214.41176470588243" x="2536.7941176470586" y="-315.52413793103443" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-95" parent="lLNaNmVLa-In-2ylgruJ-2" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;fontStyle=0;container=0;" value="" vertex="1">
+          <mxGeometry height="113.14655172413792" width="214.41176470588235" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-98" parent="lLNaNmVLa-In-2ylgruJ-2" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;container=0;" value="&lt;b&gt;Wazuh Manager&lt;/b&gt;&amp;nbsp;10.10.30.20 (Static)&amp;nbsp;&lt;div&gt;1514/TCP / 1515/TCP / 55000/TCP* Logs / Alerts / Monitoring&lt;/div&gt;&lt;div&gt;Role: SIEM / Security Monitoring&lt;/div&gt;" vertex="1">
+          <mxGeometry height="99.14" width="171.8181818181818" x="21.293181818181893" y="11.48655172413794" as="geometry" />
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-106" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-103" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;entryX=0.004;entryY=0.269;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-95" value="Logs / Security Events">
+          <mxGeometry relative="1" x="0.5039" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2399" y="-530.02" />
+              <mxPoint x="2399" y="-310.02" />
+              <mxPoint x="2199" y="-310.02" />
+              <mxPoint x="2199" y="-270.02" />
+              <mxPoint x="2480" y="-270.02" />
+              <mxPoint x="2480" y="-275.52" />
+              <mxPoint x="2479" y="-275.52" />
+              <mxPoint x="2479" y="-285.09999999999997" />
+            </Array>
+            <mxPoint x="2422.4856250000003" y="-259.9965625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-135" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-126" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-95" value="Wazuh Agent / Security Telemetry">
+          <mxGeometry relative="1" x="0.5927" y="2" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2349" y="215.06000000000006" />
+              <mxPoint x="2349" y="-125.51999999999998" />
+              <mxPoint x="2199" y="-125.51999999999998" />
+              <mxPoint x="2199" y="-233.84999999999997" />
+              <mxPoint x="2479" y="-233.84999999999997" />
+              <mxPoint x="2479" y="-258.94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-136" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.001;entryY=0.847;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-95" value="Wazuh Agent / Security Telemetry">
+          <mxGeometry relative="1" x="0.705" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2379" y="405.05999999999995" />
+              <mxPoint x="2379" y="-159.93999999999994" />
+              <mxPoint x="2219" y="-159.93999999999994" />
+              <mxPoint x="2219" y="-199.93999999999994" />
+              <mxPoint x="2480" y="-199.93999999999994" />
+              <mxPoint x="2480" y="-219.69" />
+            </Array>
+            <mxPoint x="2563.185625" y="-209.9665625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-122" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-110" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;entryX=1.006;entryY=0.352;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-95" value="Host / Firewall logs*">
+          <mxGeometry relative="1" x="0.6298" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2819.0299999999997" y="-421.01" />
+              <mxPoint x="2819.0299999999997" y="-295.52" />
+              <mxPoint x="2909.03" y="-295.52" />
+              <mxPoint x="2909.03" y="-275.69" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7DGryhYYoJN_tTkDn_Sx-145" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-140" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;entryX=1.002;entryY=0.649;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.002;exitY=0.32;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-95" value="Logs / Security Events">
+          <mxGeometry relative="1" x="0.7644" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2745.8900000000003" y="144.59000000000003" />
+              <mxPoint x="2747.09" y="144.59000000000003" />
+              <mxPoint x="2747.09" y="140.01999999999998" />
+              <mxPoint x="2810" y="140.01999999999998" />
+              <mxPoint x="2810" y="-169.98000000000002" />
+              <mxPoint x="2909.03" y="-169.98000000000002" />
+              <mxPoint x="2909.03" y="-242.08999999999997" />
+            </Array>
+            <mxPoint x="3185.015625" y="519.0034375" as="sourcePoint" />
+            <mxPoint x="2300.015625" y="200.00343750000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxJ2XJlgve_ro-AhCcac-2" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-127" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;fontColor=#1d4ed8;endArrow=block;exitX=1.004;exitY=0.264;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-94" value="Admin / Identity Management&lt;div&gt;&lt;br/&gt;&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.3701" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2099" y="30.3" />
+              <mxPoint x="2099" y="-275.52" />
+              <mxPoint x="2009" y="-275.52" />
+              <mxPoint x="2009" y="-365.52" />
+              <mxPoint x="2459" y="-365.52" />
+              <mxPoint x="2459" y="-408.9" />
+            </Array>
+            <mxPoint x="2030" y="395.48" as="sourcePoint" />
+            <mxPoint x="2547" y="-375.52" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxJ2XJlgve_ro-AhCcac-3" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-127" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;fontColor=#1d4ed8;endArrow=block;entryX=0.177;entryY=0.99;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.001;exitY=0.689;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-112" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Management&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.7485" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2299" y="74.9" />
+              <mxPoint x="2299" y="4.48" />
+              <mxPoint x="2929.41" y="4.48" />
+            </Array>
+            <mxPoint x="2030" y="74.5" as="sourcePoint" />
+            <mxPoint x="2547" y="-398.52" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxJ2XJlgve_ro-AhCcac-4" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-127" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;fontColor=#1d4ed8;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-95" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Dashboard / Security Monitoring&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.3287" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2079" y="55.129999999999995" />
+              <mxPoint x="2119" y="54.42000000000007" />
+              <mxPoint x="2119" y="-55.57999999999993" />
+              <mxPoint x="2459" y="-55.57999999999993" />
+              <mxPoint x="2459" y="-175.57999999999993" />
+              <mxPoint x="2644.06" y="-175.57999999999993" />
+            </Array>
+            <mxPoint x="2136" y="320.0300000000002" as="sourcePoint" />
+            <mxPoint x="2647" y="-133.97000000000003" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QxJ2XJlgve_ro-AhCcac-7" edge="1" parent="1" source="7DGryhYYoJN_tTkDn_Sx-127" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;entryX=-0.012;entryY=0.781;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.006;exitY=0.142;exitDx=0;exitDy=0;exitPerimeter=0;" target="7DGryhYYoJN_tTkDn_Sx-103" value="DENY – no direct access">
+          <mxGeometry relative="1" x="-0.2342" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1779" y="17.480000000000018" />
+              <mxPoint x="1779" y="-155.51999999999998" />
+              <mxPoint x="1969" y="-155.51999999999998" />
+              <mxPoint x="1969" y="-355.52" />
+              <mxPoint x="1929" y="-355.52" />
+              <mxPoint x="1929" y="-545.52" />
+            </Array>
+            <mxPoint x="1819" y="-58.110000000000014" as="sourcePoint" />
+            <mxPoint x="2387" y="-281.11" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

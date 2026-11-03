@@ -1,0 +1,13 @@
+\section*{TÓM TẮT DỰ ÁN\\BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST}
+
+Đồ án nghiên cứu và triển khai mô hình kiến trúc Zero Trust Network Access (ZTNA) kết hợp với hệ thống Quản lý Danh tính và Truy cập (IAM) nhằm bảo vệ hệ thống Hồ sơ Y tế Điện tử (OpenEMR). Trong bối cảnh ngành y tế chuyển đổi số mạnh mẽ, các giải pháp mạng truyền thống dựa trên vùng biên (Perimeter-based Security) như VPN bộc lộ nhiều lỗ hổng lớn khi cho phép truy cập ngầm định khi đã vào mạng nội bộ. Dự án ứng dụng kiến trúc Identity-Aware Proxy (IAP) với nguyên tắc cốt lõi "Không tin tưởng mặc định, luôn luôn xác thực và kiểm tra". Báo cáo được cấu trúc gồm 4 chương chính.
+
+Chương 1 giới thiệu tổng quan về lý do chọn đề tài, tính cấp thiết của việc bảo mật thông tin sức khỏe bệnh nhân, mục tiêu nghiên cứu và phạm vi triển khai PoC.
+
+Chương 2 trình bày chi tiết cơ sở lý thuyết về mô hình Zero Trust theo chuẩn NIST SP 800-207 và 5 trụ cột CISA. Đồng thời, chương giải thích rõ ràng nguyên nhân lựa chọn và mục đích sử dụng cụ thể của từng công nghệ cốt lõi bao gồm Keycloak (IdP/SSO/MFA), Pomerium (Access Gateway/PEP), OpenEMR (Hệ thống EHR), MariaDB (Mã hóa dữ liệu tại chỗ), Easy-RSA (Cấp chứng chỉ mTLS thiết bị), Wazuh (SIEM/XDR giám sát điểm cuối) và Proxmox VE (Phân đoạn mạng logic).
+
+Chương 3 mô tả quá trình thực nghiệm triển khai hạ tầng ảo hóa trên Proxmox VE với 6 phân đoạn VLAN, xây dựng 5 máy chủ ảo (VM), cấu hình ma trận phân quyền RBAC trên Keycloak và Pomerium, thiết lập mã hóa mTLS cũng như cơ chế mã hóa cơ sở dữ liệu MariaDB.
+
+Chương 4 tổng hợp kết quả thực nghiệm dựa trên bộ 20 kịch bản kiểm thử (Test Cases), đánh giá mức độ đáp ứng 5 trụ cột CISA, phân tích tiến độ dự án hiện tại và đề xuất hướng phát triển mở rộng hệ thống trong tương lai.
+
+\newpage

@@ -1,0 +1,13 @@
+\section*{\fontsize{16pt}{15pt}\selectfont SECURING ELECTRONIC HEALTH RECORDS USING ZERO TRUST ARCHITECTURE \\ABSTRACT}
+
+This project focuses on researching and deploying a Zero Trust Network Access (ZTNA) architecture integrated with Identity and Access Management (IAM) to secure Electronic Health Record (EHR) systems powered by OpenEMR. As healthcare digital transformation accelerates, traditional perimeter security models like VPNs expose critical vulnerabilities due to implicit trust once inside the internal network. This project adopts an Identity-Aware Proxy (IAP) framework enforcing the core principle of "Never Trust, Always Verify". The report is structured into 4 main chapters.
+
+Chapter 1 introduces the background, motivation, research objectives, scope of the PoC implementation, and the structural overview of the report.
+
+Chapter 2 presents the theoretical foundation based on NIST SP 800-207 framework and CISA 5 pillars. It explicitly details the rationale and specific purposes for adopting core open-source technologies including Keycloak (IAM/SSO/MFA), Pomerium (Access Proxy/PEP), OpenEMR (EHR System), MariaDB (Data-at-Rest Encryption), Easy-RSA (mTLS Device Identity), Wazuh (Endpoint SIEM/XDR), and Proxmox VE (Network Virtualization \& Segmentation).
+
+Chapter 3 describes the experimental deployment on Proxmox VE featuring 6 isolated VLAN segments, 5 virtual machines, RBAC policy mappings across Keycloak and Pomerium, mTLS device authentication, and database transparent encryption.
+
+Chapter 4 summarizes the empirical results based on 20 comprehensive test cases, evaluates alignment with CISA maturity pillars, assesses project progress metrics, and discusses future enhancement directions.
+
+\newpage

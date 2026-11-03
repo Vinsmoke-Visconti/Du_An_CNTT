@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[fontsize=13pt]{scrextend}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{natbib}
+\usepackage{listings}
+\usepackage{array}
+\usepackage[hyphens]{url}
+\usepackage{xurl}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+}
+\urlstyle{same} % Đảm bảo toàn bộ URL và chuỗi ký tự hiển thị màu đen chuẩn
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    frame=single,
+    breaklines=true,
+    columns=fullflexible
+}
+\bibliographystyle{apalike}
+
+\usepackage{longtable}
+\usepackage[left=3cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{mathptmx} % Times New Roman
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{indentfirst} % Thụt đầu dòng đoạn văn
+\renewcommand{\baselinestretch}{1.2} % Giãn dòng 1.2
+\setlength{\parskip}{6pt} % Khoảng cách giữa các đoạn
+\setlength{\parindent}{1cm} % Khoảng cách thụt đầu dòng 1cm
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+
+% Heading 1 - Section (Chương)
+\titlespacing*{\section}{0pt}{12pt}{15pt}
+\titleformat*{\section}{\fontsize{16pt}{0pt}\selectfont \bfseries \centering}
+
+% Heading 2 - Subsection (2.2) - Lề trái 0pt
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
+\titleformat*{\subsection}{\fontsize{14pt}{0pt}\selectfont \bfseries}
+
+% Heading 3 - Subsubsection (2.2.1) - Căn ngang hàng với 2.2 (Lề trái 0pt)
+\titlespacing*{\subsubsection}{0pt}{6pt}{3pt}
+\titleformat*{\subsubsection}{\fontsize{13pt}{0pt}\selectfont \bfseries \itshape}
+
+% Heading 4 - Paragraph
+\titlespacing*{\paragraph}{0pt}{4pt}{2pt}
+\titleformat*{\paragraph}{\fontsize{13pt}{0pt}\selectfont \itshape}
+
+\renewcommand{\figurename}{\fontsize{12pt}{0pt}\selectfont \bfseries Hình}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\usepackage[font=bf]{caption}
+\captionsetup[figure]{labelsep=space}
+
+\renewcommand{\tablename}{\fontsize{12pt}{0pt}\selectfont \bfseries Bảng}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\captionsetup[table]{labelsep=space}
+
+\usepackage{tabularx}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\usepackage{colortbl}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+
+\renewcommand{\contentsname}{MỤC LỤC}
+\renewcommand{\listfigurename}{DANH MỤC HÌNH VẼ}
+\renewcommand{\listtablename}{DANH MỤC BẢNG BIỂU}
+\renewcommand{\refname}{TÀI LIỆU THAM KHẢO}
+
+% Khai báo thông tin dự án
+\newcommand{\khoa}{CÔNG NGHỆ THÔNG TIN}
+\newcommand{\mon}{DỰ ÁN CÔNG NGHỆ THÔNG TIN}
+\newcommand{\de}{BÁO CÁO DỰ ÁN \\ BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST}
+\newcommand{\gvhd}{ThS. BÙI QUY ANH}
+\newcommand{\svmot}{52300267 - Huỳnh Nguyễn Quốc Việt}
+\newcommand{\svhai}{52300268 - Nguyễn Hoàng Việt}
+\newcommand{\lop}{23050401}
+\newcommand{\khoahoc}{27}
+\newcommand{\nam}{2026}
+
+\begin{document}
+
+    \input{Template/TrangBia}
+    \input{Template/TrangPhuBia}
+    \input{Template/LoiCamOn}
+    \input{Template/CamKet}
+    \input{Template/TomTat}
+
+    % Mục lục tự động
+    \addtocontents{toc}{\protect\thispagestyle{empty}}
+    \tableofcontents
+    \thispagestyle{empty}
+    \cleardoublepage
+
+    \pagenumbering{roman}
+    
+    % Danh mục hình vẽ
+    {\let\oldnumberline\numberline
+        \renewcommand{\numberline}{Hình~\oldnumberline}
+        \listoffigures}
+    \phantomsection\addcontentsline{toc}{section}{\numberline {} DANH MỤC HÌNH VẼ}
+    \newpage
+
+    % Danh mục bảng biểu
+    {\let\oldnumberline\numberline
+        \renewcommand{\numberline}{Bảng~\oldnumberline}
+        \listoffigures}
+    \phantomsection\addcontentsline{toc}{section}{\numberline {} DANH MỤC BẢNG BIỂU}
+    \newpage
+
+    \input{Template/DanhMucVietTat}
+
+    \pagenumbering{arabic}
+
+    % 4 CHƯƠNG CHÍNH NỘI DUNG BÁO CÁO
+    \include{chuongs/chuong1_gioithieu}
+    \newpage
+    \clearpage
+
+    \include{chuongs/chuong2_cosonlythuyet}
+    \newpage
+    \clearpage
+
+    \include{chuongs/chuong3_thucnghiem}
+    \newpage
+    \clearpage
+
+    \include{chuongs/chuong4_ketqua}
+    \newpage
+    \clearpage
+
+    \phantomsection\addcontentsline{toc}{section}{\numberline {}TÀI LIỆU THAM KHẢO}
+    \bibliography{tailieuthamkhao}
+    \newpage
+
+\end{document}

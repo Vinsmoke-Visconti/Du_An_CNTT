@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # --- PHẦN 1: KEYCLOAK & DATABASE (SECURITY IDP) ---
+  postgres:
+    image: postgres:16-alpine
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.2
+    container_name: zt-keycloak01
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak_password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: AdminPassword123!
+      KC_HTTP_ENABLED: 'true'
+      KC_HOSTNAME_STRICT: 'false'
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config/keycloak/medical-realm.json:/opt/keycloak/data/import/medical-realm.json
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  # --- 2: POMERIUM ZTNA GATEWAY ---
+  zt-pomerium01:
+    image: pomerium/pomerium:latest
+    container_name: zt-pomerium01
+    environment:
+      - AUTHENTICATE_SERVICE_URL=https://authenticate.medical.local
+      - IDP_PROVIDER=oidc
+      - IDP_PROVIDER_URL=http://10.10.30.10:8080/realms/medical-realm
+      - IDP_CLIENT_ID=pomerium
+      - IDP_CLIENT_SECRET=3NOpazpJAew89KG8Qq6NZnMpehfQQo6FKNGkorVV69pcYwNBb3YNuH150k29JeGWhwZkSW7NC5Z2W9fmIymm2P
+      - COOKIE_SECRET=R0IgQe52jMu1xtVtiMEyRazf4hUDI0/73A9R5aRmKMs=
+      - SHARED_SECRET=ePoakqP99t461w4HCxjKPJ88oysQCpDaprkWvzaQHSM=
+      - INSECURE_SERVER=false
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./config/pomerium/config.yaml:/pomerium/config.yaml
+    depends_on:
+      - keycloak
+      - openemr
+    restart: unless-stopped
+
+  # --- 3: OPENEMR & DATABASE ---
+  openemr-db:
+    image: mariadb:10.11
+    container_name: openemr-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: openemr
+      MYSQL_USER: openemr
+      MYSQL_PASSWORD: secretpassword
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  openemr:
+    image: openemr/openemr:7.0.2
+    container_name: openemr
+    ports:
+      - "8081:80"
+    environment:
+      MYSQL_HOST: openemr-db
+      MYSQL_USER: openemr
+      MYSQL_PASSWORD: secretpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+      OE_USER: admin
+      OE_PASS: pass
+      OE_SITE: default
+    depends_on:
+      - openemr-db
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

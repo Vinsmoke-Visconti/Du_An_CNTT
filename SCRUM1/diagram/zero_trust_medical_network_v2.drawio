@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-08-23T00:16:00.000Z" agent="ChatGPT" version="24.7.17" type="device">
+  <diagram id="ZT-MED-NET-V2" name="Zero Trust Medical Network – Revised">
+    <mxGraphModel dx="1900" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+<mxCell id="title" value="BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST TRÊN NỀN TẢNG CLOUD
+Sơ đồ mạng PoC – VLAN / Subnet / IP / Port / Firewall Policy" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1f2937;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="1600" height="70" as="geometry"/></mxCell>
+<mxCell id="note" value="QUY ƯỚC ĐÃ ĐỒNG BỘ:
+• Toàn bộ IP dùng dải 10.20.x.x (đồng nhất với Sơ đồ mạng)
+• Client dùng DHCP; server/VM dùng Static IP
+• Thêm VLAN 60 – Proxmox Management
+• mTLS chỉ thể hiện ở Client → Pomerium; Internet → Firewall chỉ HTTPS 443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="95" width="1600" height="75" as="geometry"/></mxCell>
+<mxCell id="internet" value="Internet / External
+Untrusted" style="shape=mxgraph.networks.cloud;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fef2f2;strokeColor=#dc2626;" vertex="1" parent="1"><mxGeometry x="65" y="220" width="150" height="90" as="geometry"/></mxCell>
+<mxCell id="router" value="Edge Router
+WAN / Routing" style="shape=mxgraph.networks.router;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#f3f4f6;strokeColor=#4b5563;" vertex="1" parent="1"><mxGeometry x="260" y="220" width="150" height="90" as="geometry"/></mxCell>
+<mxCell id="pfw" value="Proxmox Firewall
+Inter-zone Firewall
+Default DENY" style="shape=mxgraph.networks.firewall;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.8;fillColor=#fee2e2;strokeColor=#b91c1c;" vertex="1" parent="1"><mxGeometry x="455" y="210" width="190" height="110" as="geometry"/></mxCell>
+<mxCell id="vsw" value="Proxmox vSwitch /
+VLAN-aware Bridge" style="shape=mxgraph.networks.switch;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#e0f2fe;strokeColor=#0369a1;" vertex="1" parent="1"><mxGeometry x="700" y="210" width="190" height="110" as="geometry"/></mxCell>
+<mxCell id="zoneClient" value="CLIENT / UNTRUSTED ZONE
+VLAN 10 – 10.20.10.0/24
+GW 10.20.10.1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#f3f4f6;strokeColor=#6b7280;" vertex="1" parent="1"><mxGeometry x="40" y="370" width="300" height="580" as="geometry"/></mxCell>
+<mxCell id="zoneDMZ" value="DMZ ZONE
+VLAN 20 – 10.20.20.0/24
+GW 10.20.20.1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#fff7ed;strokeColor=#ea580c;" vertex="1" parent="1"><mxGeometry x="365" y="370" width="300" height="580" as="geometry"/></mxCell>
+<mxCell id="zoneSec" value="SECURITY / MANAGEMENT ZONE
+VLAN 30 – 10.20.30.0/24
+GW 10.20.30.1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#f5f3ff;strokeColor=#7c3aed;" vertex="1" parent="1"><mxGeometry x="690" y="370" width="340" height="580" as="geometry"/></mxCell>
+<mxCell id="zoneApp" value="INTERNAL APP ZONE
+VLAN 40 – 10.20.40.0/24
+GW 10.20.40.1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#eff6ff;strokeColor=#2563eb;" vertex="1" parent="1"><mxGeometry x="1055" y="370" width="300" height="580" as="geometry"/></mxCell>
+<mxCell id="zoneDB" value="DB ZONE
+VLAN 50 – 10.20.50.0/24
+GW 10.20.50.1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#ecfdf5;strokeColor=#059669;" vertex="1" parent="1"><mxGeometry x="1380" y="370" width="300" height="580" as="geometry"/></mxCell>
+<mxCell id="zoneMgmt" value="PROXMOX MANAGEMENT ZONE
+VLAN 60 – 10.20.60.0/24
+GW 10.20.60.1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#eef2ff;strokeColor=#4f46e5;" vertex="1" parent="1"><mxGeometry x="40" y="970" width="1640" height="100" as="geometry"/></mxCell>
+<mxCell id="docpc" value="Bác sĩ PC
+DHCP: 10.20.10.100–200
+Client Certificate + Wazuh Agent
+HTTPS 443 / mTLS" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;" vertex="1" parent="1"><mxGeometry x="70" y="500" width="240" height="105" as="geometry"/></mxCell>
+<mxCell id="staffpc" value="Staff / Clerk PC
+DHCP: 10.20.10.100–200
+Client Certificate + Wazuh Agent
+HTTPS 443 / mTLS" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;" vertex="1" parent="1"><mxGeometry x="70" y="650" width="240" height="105" as="geometry"/></mxCell>
+<mxCell id="adminpc" value="IT Admin PC
+DHCP / reservation
+Management access by policy
+HTTPS 443 / SSH 22*" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;" vertex="1" parent="1"><mxGeometry x="70" y="800" width="240" height="105" as="geometry"/></mxCell>
+<mxCell id="pomerium" value="Pomerium Gateway / PEP
+10.20.20.10 (Static)
+HTTPS 443 / mTLS from client
+Zero Trust Access Proxy" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fff7ed;strokeColor=#ea580c;" vertex="1" parent="1"><mxGeometry x="395" y="535" width="240" height="125" as="geometry"/></mxCell>
+<mxCell id="dmzpolicy" value="Firewall policy:
+Client → Pomerium 443 ALLOW
+Internet → Firewall 443 only
+Client → Internal IPs DENY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="395" y="700" width="240" height="120" as="geometry"/></mxCell>
+<mxCell id="keycloak" value="Keycloak IdP
+10.20.30.10 (Static)
+HTTPS 8443
+MFA / OIDC / RBAC" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;" vertex="1" parent="1"><mxGeometry x="725" y="500" width="270" height="125" as="geometry"/></mxCell>
+<mxCell id="wazuh" value="Wazuh Manager / SIEM
+10.20.30.20 (Static)
+1514 / 1515 / 55000*
+Logs / Alerts / Monitoring" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;" vertex="1" parent="1"><mxGeometry x="725" y="665" width="270" height="125" as="geometry"/></mxCell>
+<mxCell id="sec_policy" value="Security policy:
+Client → Keycloak/Wazuh DENY
+Pomerium → Keycloak ALLOW
+Agents → Wazuh ALLOW" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#a78bfa;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="725" y="825" width="270" height="90" as="geometry"/></mxCell>
+<mxCell id="openemr" value="OpenEMR Web Server
+10.20.40.10 (Static)
+HTTPS 443 / HTTP 80*
+Application / EMR" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eff6ff;strokeColor=#2563eb;" vertex="1" parent="1"><mxGeometry x="1085" y="555" width="240" height="125" as="geometry"/></mxCell>
+<mxCell id="app_policy" value="App policy:
+Pomerium → OpenEMR ALLOW
+Client → OpenEMR DENY
+Direct bypass blocked" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#60a5fa;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1085" y="720" width="240" height="115" as="geometry"/></mxCell>
+<mxCell id="mariadb" value="MariaDB
+10.20.50.10 (Static)
+TCP 3306 only
+EMR Data / TDE*" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ecfdf5;strokeColor=#059669;" vertex="1" parent="1"><mxGeometry x="1410" y="575" width="240" height="125" as="geometry"/></mxCell>
+<mxCell id="db_policy" value="DB policy:
+OpenEMR → MariaDB:3306 ALLOW
+Other sources → 3306 DENY
+No direct Client access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#34d399;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1410" y="735" width="240" height="115" as="geometry"/></mxCell>
+<mxCell id="proxmox" value="Proxmox VE Host / Management
+10.20.60.10 (Static)
+HTTPS 8006 / SSH 22*
+VM / VLAN / Firewall management" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eef2ff;strokeColor=#4f46e5;" vertex="1" parent="1"><mxGeometry x="650" y="985" width="420" height="70" as="geometry"/></mxCell>
+<mxCell id="mgmt_note" value="VLAN 60 chỉ dành cho quản trị hạ tầng; không dùng cho user/application traffic." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#818cf8;fontSize=11;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1100" y="985" width="520" height="70" as="geometry"/></mxCell>
+<mxCell id="e1" value="HTTPS 443" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" edge="1" parent="1" source="internet" target="router"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="WAN" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" edge="1" parent="1" source="router" target="pfw"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="Inter-zone routing / filtering" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="pfw" target="vsw"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="VLAN 10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#6b7280;endArrow=block;" edge="1" parent="1" source="vsw" target="zoneClient"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="VLAN 20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" edge="1" parent="1" source="vsw" target="zoneDMZ"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e6" value="VLAN 30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" edge="1" parent="1" source="vsw" target="zoneSec"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e7" value="VLAN 40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;" edge="1" parent="1" source="vsw" target="zoneApp"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e8" value="VLAN 50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;" edge="1" parent="1" source="vsw" target="zoneDB"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e9" value="VLAN 60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#4f46e5;endArrow=block;" edge="1" parent="1" source="vsw" target="zoneMgmt"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e10" value="HTTPS 443 / mTLS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" edge="1" parent="1" source="docpc" target="pomerium"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e11" value="HTTPS 443 / mTLS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" edge="1" parent="1" source="staffpc" target="pomerium"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e12" value="HTTPS 443 / mTLS*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.8;strokeColor=#ea580c;dashed=1;endArrow=block;" edge="1" parent="1" source="adminpc" target="pomerium"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e13" value="OIDC / HTTPS 8443 – Authentication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" edge="1" parent="1" source="pomerium" target="keycloak"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e14" value="HTTPS 443 / 80* – Authorized App Traffic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;" edge="1" parent="1" source="pomerium" target="openemr"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e15" value="TCP 3306 – DB only" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;" edge="1" parent="1" source="openemr" target="mariadb"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e16" value="Wazuh Agent / Security Telemetry" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="docpc" target="wazuh"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e17" value="Wazuh Agent / Security Telemetry" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="staffpc" target="wazuh"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e18" value="Logs / Security Events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="pomerium" target="wazuh"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e19" value="Logs / Security Events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="keycloak" target="wazuh"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e20" value="Logs / Security Events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="openemr" target="wazuh"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e21" value="Host / Firewall logs*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" edge="1" parent="1" source="proxmox" target="wazuh"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="d1" value="DENY – no direct access" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="docpc" target="openemr"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="d2" value="DENY – no direct DB access" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="docpc" target="mariadb"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="d3" value="DENY – IdP not directly exposed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="docpc" target="keycloak"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="d4" value="DENY – management isolated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" edge="1" parent="1" source="docpc" target="proxmox"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="legend" value="LEGEND
+🖥 Device/VM icon = endpoint or server
+🔀 Switch = Proxmox vSwitch / VLAN-aware bridge
+🧱 Firewall = Proxmox Firewall / inter-zone segmentation
+🟣 Dashed = monitoring / security telemetry
+🔴 Red dashed = explicitly denied path
+🟠 Pomerium = PEP / access gateway
+* = depends on final PoC configuration; do not claim unless implemented" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9ca3af;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1100" y="95" width="580" height="150" as="geometry"/></mxCell>
+<mxCell id="foot" value="PoC addressing proposal. IPs/VLANs are design values, not implementation facts from the source documents.
+Client addressing is DHCP; static IPs are reserved for infrastructure/VMs. VLAN 60 separates Proxmox management from application/data traffic." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#4b5563;" vertex="1" parent="1"><mxGeometry x="40" y="1080" width="1640" height="40" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

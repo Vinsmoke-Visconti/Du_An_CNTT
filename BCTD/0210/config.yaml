@@ -1,0 +1,10 @@
+autocert: false
+
+routes:
+  - from: https://openemr.medical.local
+    to: http://10.10.30.10:8081
+    policy:
+      - allow:
+          and:
+            - claim/realm_access.roles: Doctor
+            - claim/department: Cardiology

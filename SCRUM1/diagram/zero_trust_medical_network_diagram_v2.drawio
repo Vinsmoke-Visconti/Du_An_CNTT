@@ -1,0 +1,743 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" pages="2">
+  <diagram id="ZT-MED-NET-V2" name="Zero Trust Medical Network – Revised">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1800" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1f2937;" value="BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST TRÊN NỀN TẢNG CLOUD Sơ đồ mạng PoC – VLAN / Subnet / IP / Port / Firewall Policy" vertex="1">
+          <mxGeometry height="70" width="1600" x="250" y="-450" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontSize=11;align=center;verticalAlign=middle;" value="&lt;b&gt;QUY ƯỚC ĐÃ ĐỒNG BỘ:&amp;nbsp;&lt;/b&gt;&lt;div&gt;• Toàn bộ IP dùng dải 10.20.x.x (đồng nhất với Sơ đồ mạng)&amp;nbsp;&lt;/div&gt;&lt;div&gt;• Client dùng DHCP; server/VM dùng Static IP&amp;nbsp;&lt;/div&gt;&lt;div&gt;• Thêm VLAN 60 – Proxmox Management&amp;nbsp;&lt;/div&gt;&lt;div&gt;• mTLS chỉ thể hiện ở Client → Pomerium; Internet → Firewall chỉ HTTPS 443&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="500" x="-40" y="-360" as="geometry" />
+        </mxCell>
+        <mxCell id="internet" parent="1" style="shape=mxgraph.networks.cloud;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fef2f2;strokeColor=#dc2626;" value="Internet / External Untrusted" vertex="1">
+          <mxGeometry height="90" width="150" x="350" y="-240" as="geometry" />
+        </mxCell>
+        <mxCell id="router" parent="1" style="shape=mxgraph.networks.router;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#f3f4f6;strokeColor=#4b5563;" value="Edge Router WAN / Routing" vertex="1">
+          <mxGeometry height="90" width="150" x="750" y="-240" as="geometry" />
+        </mxCell>
+        <mxCell id="pfw" parent="1" style="shape=mxgraph.networks.firewall;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.8;fillColor=#fee2e2;strokeColor=#b91c1c;" value="Proxmox Firewall Inter-zone Firewall Default DENY" vertex="1">
+          <mxGeometry height="110" width="190" x="1205" y="-250" as="geometry" />
+        </mxCell>
+        <mxCell id="vsw" parent="1" style="shape=mxgraph.networks.switch;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#e0f2fe;strokeColor=#0369a1;" value="Proxmox vSwitch / VLAN-aware Bridge" vertex="1">
+          <mxGeometry height="110" width="190" x="1205" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zoneMgmt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#eef2ff;strokeColor=#4f46e5;" value="PROXMOX MANAGEMENT ZONE VLAN 60 – 10.20.60.0/24 GW 10.20.60.1" vertex="1">
+          <mxGeometry height="310" width="590" x="1150" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="internet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" target="router" value="HTTPS 443">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="router" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" target="pfw" value="WAN">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="pfw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#b91c1c;endArrow=block;" target="vsw" value="Inter-zone routing / filtering">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="vsw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" target="zoneSec" value="VLAN 30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="vsw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#4f46e5;endArrow=block;" target="zoneMgmt" value="VLAN 60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="docpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" target="pomerium" value="HTTPS 443 / mTLS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" edge="1" parent="1" source="docpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" target="mariadb" value="DENY – no direct DB access">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="550" />
+              <mxPoint x="230" y="340" />
+              <mxPoint x="2080" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d3" edge="1" parent="1" source="docpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" target="keycloak" value="DENY – IdP not directly exposed">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-40" y="630" />
+              <mxPoint x="580" y="630" />
+              <mxPoint x="580" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9ca3af;fontSize=11;align=left;verticalAlign=middle;" value="LEGEND 🖥 Device/VM icon = endpoint or server 🔀 Switch = Proxmox vSwitch / VLAN-aware bridge 🧱 Firewall = Proxmox Firewall / inter-zone segmentation 🟣 Dashed = monitoring / security telemetry 🔴 Red dashed = explicitly denied path 🟠 Pomerium = PEP / access gateway * = depends on final PoC configuration; do not claim unless implemented" vertex="1">
+          <mxGeometry height="150" width="580" x="1740" y="-390" as="geometry" />
+        </mxCell>
+        <mxCell id="foot" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#4b5563;" value="PoC addressing proposal. IPs/VLANs are design values, not implementation facts from the source documents. Client addressing is DHCP; static IPs are reserved for infrastructure/VMs. VLAN 60 separates Proxmox management from application/data traffic." vertex="1">
+          <mxGeometry height="40" width="1150" x="530" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="proxmox" parent="1" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eef2ff;strokeColor=#4f46e5;" value="" vertex="1">
+          <mxGeometry height="93.33" width="270" x="1225" y="453.3299999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="mgmt_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#818cf8;fontSize=11;align=center;verticalAlign=middle;" value="VLAN 60 chỉ dành cho quản trị hạ tầng; không dùng cho user/application traffic." vertex="1">
+          <mxGeometry height="93.33" width="415" x="1225" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(26, 26, 26);&quot;&gt;Proxmox VE Host / Management 10.20.60.10 (Static) HTTPS 8006 / SSH 22* VM / VLAN / Firewall management&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="1510" y="466.6600000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-4" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="490" width="300" x="1920" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="zoneApp" parent="83q7OmvDOx2LVXUHkjVh-4" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#eff6ff;strokeColor=#2563eb;" value="INTERNAL APP ZONE VLAN 40 – 10.20.40.0/24 GW 10.20.40.1" vertex="1">
+          <mxGeometry height="490" width="300" as="geometry" />
+        </mxCell>
+        <mxCell id="openemr" parent="83q7OmvDOx2LVXUHkjVh-4" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eff6ff;strokeColor=#2563eb;" value="OpenEMR Web Server 10.20.40.10 (Static) HTTPS 443 / HTTP 80* Application / EMR" vertex="1">
+          <mxGeometry height="105.60344827586208" width="240" x="30" y="156.29310344827587" as="geometry" />
+        </mxCell>
+        <mxCell id="app_policy" parent="83q7OmvDOx2LVXUHkjVh-4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#60a5fa;fontSize=11;align=left;verticalAlign=middle;" value="App policy: Pomerium → OpenEMR ALLOW Client → OpenEMR DENY Direct bypass blocked" vertex="1">
+          <mxGeometry height="97.15517241379311" width="240" x="30" y="295.6896551724138" as="geometry" />
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-6" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="580" width="340" x="760" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="zoneSec" parent="83q7OmvDOx2LVXUHkjVh-6" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#f5f3ff;strokeColor=#7c3aed;" value="SECURITY / MANAGEMENT ZONE VLAN 30 – 10.20.30.0/24 GW 10.20.30.1" vertex="1">
+          <mxGeometry height="580" width="340" as="geometry" />
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-5" connectable="0" parent="83q7OmvDOx2LVXUHkjVh-6" style="group" value="" vertex="1">
+          <mxGeometry height="415" width="270" x="35" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="keycloak" parent="83q7OmvDOx2LVXUHkjVh-5" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;" value="Keycloak IdP 10.20.30.10 (Static) HTTPS 8443 MFA / OIDC / RBAC" vertex="1">
+          <mxGeometry height="125" width="270" as="geometry" />
+        </mxCell>
+        <mxCell id="wazuh" parent="83q7OmvDOx2LVXUHkjVh-5" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;" value="Wazuh Manager / SIEM 10.20.30.20 (Static) 1514 / 1515 / 55000* Logs / Alerts / Monitoring" vertex="1">
+          <mxGeometry height="125" width="270" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="sec_policy" parent="83q7OmvDOx2LVXUHkjVh-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#a78bfa;fontSize=11;align=left;verticalAlign=middle;" value="Security policy: Client → Keycloak/Wazuh DENY Pomerium → Keycloak ALLOW Agents → Wazuh ALLOW" vertex="1">
+          <mxGeometry height="90" width="270" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="83q7OmvDOx2LVXUHkjVh-5" source="keycloak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="wazuh" value="Logs / Security Events">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-8" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="580" width="300" x="-230" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="zoneClient" parent="83q7OmvDOx2LVXUHkjVh-8" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#f3f4f6;strokeColor=#6b7280;" value="CLIENT / UNTRUSTED ZONE VLAN 10 – 10.20.10.0/24 GW 10.20.10.1" vertex="1">
+          <mxGeometry height="580" width="300" as="geometry" />
+        </mxCell>
+        <mxCell id="docpc" parent="83q7OmvDOx2LVXUHkjVh-8" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;" value="Bác sĩ PC DHCP: 10.20.10.100–200 Client Certificate + Wazuh Agent HTTPS 443 / mTLS" vertex="1">
+          <mxGeometry height="105" width="240" x="30" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="staffpc" parent="83q7OmvDOx2LVXUHkjVh-8" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;" value="Staff / Clerk PC DHCP: 10.20.10.100–200 Client Certificate + Wazuh Agent HTTPS 443 / mTLS" vertex="1">
+          <mxGeometry height="105" width="240" x="30" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="adminpc" parent="83q7OmvDOx2LVXUHkjVh-8" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;" value="IT Admin PC DHCP / reservation Management access by policy HTTPS 443 / SSH 22*" vertex="1">
+          <mxGeometry height="105" width="240" x="30" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="staffpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="wazuh" value="Wazuh Agent / Security Telemetry">
+          <mxGeometry relative="1" x="-0.1277" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="480" y="680" />
+              <mxPoint x="480" y="727.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d4" edge="1" parent="1" source="docpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" target="proxmox" value="DENY – management isolated">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="530" />
+              <mxPoint x="120" y="280" />
+              <mxPoint x="1220" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="vsw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#6b7280;endArrow=block;" target="zoneClient" value="VLAN 10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-80" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="vsw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" target="zoneDMZ" value="VLAN 20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="proxmox" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="wazuh" value="Host / Firewall logs*">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="500" />
+              <mxPoint x="1180" y="727.57" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="openemr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="wazuh" value="Logs / Security Events">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1690" y="1069.1" />
+              <mxPoint x="1690" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zoneDB" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#ecfdf5;strokeColor=#059669;" value="DB ZONE VLAN 50 – 10.20.50.0/24 GW 10.20.50.1" vertex="1">
+          <mxGeometry height="390" width="300" x="1930" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="mariadb" parent="1" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ecfdf5;strokeColor=#059669;" value="MariaDB 10.20.50.10 (Static) TCP 3306 only EMR Data / TDE*" vertex="1">
+          <mxGeometry height="125" width="240" x="1960" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="db_policy" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#34d399;fontSize=11;align=left;verticalAlign=middle;" value="DB policy: OpenEMR → MariaDB:3306 ALLOW Other sources → 3306 DENY No direct Client access" vertex="1">
+          <mxGeometry height="115" width="240" x="1960" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="vsw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;entryX=0.002;entryY=0.325;entryDx=0;entryDy=0;entryPerimeter=0;" target="openemr" value="VLAN 40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1790" y="75" />
+              <mxPoint x="1790" y="1050" />
+              <mxPoint x="1950.52" y="1050" />
+            </Array>
+            <mxPoint x="1950" y="1107.64" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="vsw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="mariadb" value="VLAN 50">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1690.06" y="40" />
+              <mxPoint x="1690.06" y="10" />
+              <mxPoint x="2290.06" y="10" />
+              <mxPoint x="2290.06" y="417.53" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-13" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="370" width="300" x="240" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="zoneDMZ" parent="83q7OmvDOx2LVXUHkjVh-13" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#fff7ed;strokeColor=#ea580c;" value="DMZ ZONE VLAN 20 – 10.20.20.0/24 GW 10.20.20.1" vertex="1">
+          <mxGeometry height="370" width="300" as="geometry" />
+        </mxCell>
+        <mxCell id="pomerium" parent="83q7OmvDOx2LVXUHkjVh-13" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fff7ed;strokeColor=#ea580c;" value="" vertex="1">
+          <mxGeometry height="125" width="240" x="30" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="dmzpolicy" parent="83q7OmvDOx2LVXUHkjVh-13" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=middle;" value="Firewall policy: Client → Pomerium 443 ALLOW Internet → Firewall 443 only Client → Internal IPs DENY" vertex="1">
+          <mxGeometry height="120" width="240" x="30" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="83q7OmvDOx2LVXUHkjVh-14" parent="83q7OmvDOx2LVXUHkjVh-13" style="rounded=0;whiteSpace=wrap;html=1;" value="Pomerium Gateway / PEP 10.20.20.10 (Static) HTTPS 443 / mTLS from client Zero Trust Access Proxy" vertex="1">
+          <mxGeometry height="80" width="200" x="50" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="adminpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.8;strokeColor=#ea580c;dashed=1;endArrow=block;entryX=0;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="pomerium" value="HTTPS 443 / mTLS*">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="862.52" />
+              <mxPoint x="90" y="1130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="staffpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;entryX=-0.001;entryY=0.696;entryDx=0;entryDy=0;entryPerimeter=0;" target="pomerium" value="HTTPS 443 / mTLS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="139.97" y="712.52" />
+              <mxPoint x="139.97" y="900.03" />
+              <mxPoint x="159.97" y="900.03" />
+              <mxPoint x="159.97" y="1092.03" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="pomerium" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;" target="openemr" value="HTTPS 443 / 80* – Authorized App Traffic">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1500" y="1120" />
+              <mxPoint x="1500" y="1110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="pomerium" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="wazuh" value="Logs / Security Events">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="1090" />
+              <mxPoint x="1180" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="pomerium" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" target="keycloak" value="OIDC / HTTPS 8443 – Authentication">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="docpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;" value="Wazuh Agent / Security Telemetry">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-90" y="650" />
+              <mxPoint x="540" y="650" />
+              <mxPoint x="540" y="700" />
+            </Array>
+            <mxPoint x="790" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d1" edge="1" parent="1" source="docpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;" target="openemr" value="DENY – no direct access">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710.03" y="560.03" />
+              <mxPoint x="710.03" y="1220.03" />
+              <mxPoint x="1790.03" y="1220.03" />
+              <mxPoint x="1790.03" y="1150.03" />
+              <mxPoint x="2070.03" y="1150.03" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="openemr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;" target="mariadb" value="TCP 3306 – DB only">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2070" y="960" />
+              <mxPoint x="1860" y="960" />
+              <mxPoint x="1860" y="417.6" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Copy of Zero Trust Medical Network – Revised" id="plqsKZWfIVZLTOeBimTg">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1800" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-0" />
+        <mxCell id="InewFNbxVDwqQDR-hb7V-1" parent="InewFNbxVDwqQDR-hb7V-0" />
+        <mxCell id="InewFNbxVDwqQDR-hb7V-2" parent="InewFNbxVDwqQDR-hb7V-1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1f2937;" value="BẢO MẬT HỒ SƠ Y TẾ BẰNG KIẾN TRÚC ZERO TRUST TRÊN NỀN TẢNG CLOUD Sơ đồ mạng PoC – VLAN / Subnet / IP / Port / Firewall Policy" vertex="1">
+          <mxGeometry height="70" width="1600" x="120" y="-1070" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-3" parent="InewFNbxVDwqQDR-hb7V-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#d97706;fontSize=11;align=center;verticalAlign=middle;" value="&lt;b&gt;QUY ƯỚC ĐÃ ĐỒNG BỘ:&amp;nbsp;&lt;/b&gt;&lt;div&gt;• Toàn bộ IP dùng dải 10.20.x.x (đồng nhất với Sơ đồ mạng)&amp;nbsp;&lt;/div&gt;&lt;div&gt;• Client dùng DHCP; server/VM dùng Static IP&amp;nbsp;&lt;/div&gt;&lt;div&gt;• Thêm VLAN 60 – Proxmox Management&amp;nbsp;&lt;/div&gt;&lt;div&gt;• mTLS chỉ thể hiện ở Client → Pomerium; Internet → Firewall chỉ HTTPS 443&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="500" x="1070" y="-1000" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-4" parent="InewFNbxVDwqQDR-hb7V-1" style="shape=mxgraph.networks.cloud;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fef2f2;strokeColor=#dc2626;" value="Internet / External Untrusted" vertex="1">
+          <mxGeometry height="91.03" width="460" x="385" y="-841.03" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-5" parent="InewFNbxVDwqQDR-hb7V-1" style="shape=mxgraph.networks.router;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#f3f4f6;strokeColor=#4b5563;" value="Edge Router WAN / Routing" vertex="1">
+          <mxGeometry height="103.81" width="245" x="1055" y="-900" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-6" parent="InewFNbxVDwqQDR-hb7V-1" style="shape=mxgraph.networks.firewall;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.8;fillColor=#fee2e2;strokeColor=#b91c1c;" value="Proxmox Firewall Inter-zone Firewall Default DENY" vertex="1">
+          <mxGeometry height="110" width="190" x="1390" y="-840" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-7" parent="InewFNbxVDwqQDR-hb7V-1" style="shape=mxgraph.networks.switch;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#e0f2fe;strokeColor=#0369a1;" value="Proxmox vSwitch / VLAN-aware Bridge" vertex="1">
+          <mxGeometry height="110" width="190" x="1395" y="-650" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-9" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-5" value="HTTPS 443">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-10" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#374151;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-6" value="WAN">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-11" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#b91c1c;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-7" value="Inter-zone routing / filtering">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-12" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-25" value="VLAN 30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="-570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-13" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#4f46e5;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-8" value="VLAN 60">
+          <mxGeometry relative="1" x="-0.3085" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1690.06" y="-570" />
+              <mxPoint x="1690.06" y="-510" />
+              <mxPoint x="1560.06" y="-510" />
+              <mxPoint x="1560.06" y="-470" />
+              <mxPoint x="1395" y="-470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-15" parent="InewFNbxVDwqQDR-hb7V-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9ca3af;fontSize=11;align=left;verticalAlign=middle;" value="LEGEND 🖥 Device/VM icon = endpoint or server 🔀 Switch = Proxmox vSwitch / VLAN-aware bridge 🧱 Firewall = Proxmox Firewall / inter-zone segmentation 🟣 Dashed = monitoring / security telemetry 🔴 Red dashed = explicitly denied path 🟠 Pomerium = PEP / access gateway * = depends on final PoC configuration; do not claim unless implemented" vertex="1">
+          <mxGeometry height="150" width="580" x="370" y="-1000" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-16" parent="InewFNbxVDwqQDR-hb7V-1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#4b5563;" value="PoC addressing proposal. IPs/VLANs are design values, not implementation facts from the source documents. Client addressing is DHCP; static IPs are reserved for infrastructure/VMs. VLAN 60 separates Proxmox management from application/data traffic." vertex="1">
+          <mxGeometry height="40" width="1150" x="350" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-24" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="525" width="220" x="860" y="-477.5" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-25" parent="InewFNbxVDwqQDR-hb7V-24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#f5f3ff;strokeColor=#7c3aed;" value="SECURITY / MANAGEMENT ZONE VLAN 30 – 10.20.30.0/24 GW 10.20.30.1" vertex="1">
+          <mxGeometry height="525" width="220" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-26" connectable="0" parent="InewFNbxVDwqQDR-hb7V-24" style="group" value="" vertex="1">
+          <mxGeometry height="375.6465517241379" width="174.7058823529412" x="22.647058823529413" y="117.67241379310344" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-27" parent="InewFNbxVDwqQDR-hb7V-26" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;" value="Keycloak IdP 10.20.30.10 (Static) HTTPS 8443 MFA / OIDC / RBAC" vertex="1">
+          <mxGeometry height="113.14655172413792" width="174.7058823529412" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-28" parent="InewFNbxVDwqQDR-hb7V-26" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#faf5ff;strokeColor=#7c3aed;" value="Wazuh Manager / SIEM 10.20.30.20 (Static) 1514 / 1515 / 55000* Logs / Alerts / Monitoring" vertex="1">
+          <mxGeometry height="113.14655172413792" width="174.7058823529412" y="149.35344827586206" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-29" parent="InewFNbxVDwqQDR-hb7V-26" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#a78bfa;fontSize=11;align=left;verticalAlign=middle;" value="Security policy: Client → Keycloak/Wazuh DENY Pomerium → Keycloak ALLOW Agents → Wazuh ALLOW" vertex="1">
+          <mxGeometry height="81.4655172413793" width="174.7058823529412" y="294.1810344827586" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-30" edge="1" parent="InewFNbxVDwqQDR-hb7V-26" source="InewFNbxVDwqQDR-hb7V-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-28" value="Logs / Security Events">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-38" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#6b7280;endArrow=block;fontStyle=1" target="InewFNbxVDwqQDR-hb7V-32" value="VLAN 10">
+          <mxGeometry relative="1" x="-0.4025" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1130.08" y="-630" />
+              <mxPoint x="1130.08" y="-710" />
+              <mxPoint x="100" y="-710" />
+              <mxPoint x="100" y="-330" />
+              <mxPoint x="40" y="-330" />
+              <mxPoint x="40" y="620" />
+              <mxPoint x="210" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-39" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-52" value="VLAN 20">
+          <mxGeometry relative="1" x="0.3287" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1057.5900000000001" y="-595" />
+              <mxPoint x="1057.5900000000001" y="-659.97" />
+              <mxPoint x="390" y="-659.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-51" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="320.07" width="210" x="280" y="-620" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-52" parent="InewFNbxVDwqQDR-hb7V-51" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#fff7ed;strokeColor=#ea580c;" value="DMZ ZONE VLAN 20 – 10.20.20.0/24 GW 10.20.20.1" vertex="1">
+          <mxGeometry height="320.07" width="210" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-53" parent="InewFNbxVDwqQDR-hb7V-51" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#fff7ed;strokeColor=#ea580c;" value="" vertex="1">
+          <mxGeometry height="108.13175675675674" width="168" x="21" y="47.57797297297297" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-54" parent="InewFNbxVDwqQDR-hb7V-51" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffbeb;strokeColor=#f59e0b;fontSize=11;align=left;verticalAlign=middle;" value="Firewall policy: Client → Pomerium 443 ALLOW Internet → Firewall 443 only Client → Internal IPs DENY" vertex="1">
+          <mxGeometry height="103.80648648648648" width="168" x="21" y="190.3118918918919" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-55" parent="InewFNbxVDwqQDR-hb7V-51" style="rounded=0;whiteSpace=wrap;html=1;" value="Pomerium Gateway / PEP 10.20.20.10 (Static) HTTPS 443 / mTLS from client Zero Trust Access Proxy" vertex="1">
+          <mxGeometry height="69.20432432432432" width="140" x="35" y="77.85486486486487" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-59" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;entryX=0.004;entryY=0.269;entryDx=0;entryDy=0;entryPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-28" value="Logs / Security Events">
+          <mxGeometry relative="1" x="0.5039" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="385" y="-430" />
+              <mxPoint x="680" y="-430" />
+              <mxPoint x="680" y="-230" />
+              <mxPoint x="480" y="-230" />
+              <mxPoint x="480" y="-190" />
+              <mxPoint x="800" y="-190" />
+              <mxPoint x="800" y="-180" />
+            </Array>
+            <mxPoint x="742.47" y="-180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-60" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7c3aed;endArrow=block;exitX=0.999;exitY=0.313;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-27" value="OIDC / HTTPS 8443 – Authentication">
+          <mxGeometry relative="1" x="-0.1733" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="468.8" y="-489.97" />
+              <mxPoint x="590" y="-489.97" />
+              <mxPoint x="590" y="-509.97" />
+              <mxPoint x="800" y="-509.97" />
+              <mxPoint x="800" y="-329.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O6Pto0cdoQHRmtwz4HRb-4" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="330" width="350" x="1235" y="-280" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-8" parent="O6Pto0cdoQHRmtwz4HRb-4" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#eef2ff;strokeColor=#4f46e5;" value="PROXMOX MANAGEMENT ZONE VLAN 60 – 10.20.60.0/24 GW 10.20.60.1" vertex="1">
+          <mxGeometry height="330" width="350" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-17" parent="O6Pto0cdoQHRmtwz4HRb-4" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eef2ff;strokeColor=#4f46e5;" value="" vertex="1">
+          <mxGeometry height="106.20310344827587" width="160.16949152542372" x="44.49152542372881" y="83.44448275862061" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-18" parent="O6Pto0cdoQHRmtwz4HRb-4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef2ff;strokeColor=#818cf8;fontSize=11;align=center;verticalAlign=middle;" value="VLAN 60 chỉ dành cho quản trị hạ tầng; không dùng cho user/application traffic." vertex="1">
+          <mxGeometry height="106.20310344827587" width="124.57627118644068" x="213.5593220338983" y="204.82758620689657" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-19" parent="O6Pto0cdoQHRmtwz4HRb-4" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;span style=&quot;color: rgb(26, 26, 26);&quot;&gt;Proxmox VE Host / Management 10.20.60.10 (Static) HTTPS 8006 / SSH 22* VM / VLAN / Firewall management&lt;/span&gt;" vertex="1">
+          <mxGeometry height="91.03448275862068" width="124.57627118644068" x="213.5593220338983" y="98.61310344827595" as="geometry" />
+        </mxCell>
+        <mxCell id="O6Pto0cdoQHRmtwz4HRb-5" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="350" width="220" x="1365" y="179.99999999999994" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-45" parent="O6Pto0cdoQHRmtwz4HRb-5" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=1;fillColor=#ecfdf5;strokeColor=#059669;" value="DB ZONE VLAN 50 – 10.20.50.0/24 GW 10.20.50.1" vertex="1">
+          <mxGeometry height="350.00000000000006" width="220.00000000000003" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-46" parent="O6Pto0cdoQHRmtwz4HRb-5" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ecfdf5;strokeColor=#059669;" value="MariaDB 10.20.50.10 (Static) TCP 3306 only EMR Data / TDE*" vertex="1">
+          <mxGeometry height="112.1794871794872" width="176" x="22" y="67.3076923076923" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-47" parent="O6Pto0cdoQHRmtwz4HRb-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#34d399;fontSize=11;align=left;verticalAlign=middle;" value="DB policy: OpenEMR → MariaDB:3306 ALLOW Other sources → 3306 DENY No direct Client access" vertex="1">
+          <mxGeometry height="103.20512820512822" width="176" x="22" y="210.8974358974359" as="geometry" />
+        </mxCell>
+        <mxCell id="O6Pto0cdoQHRmtwz4HRb-6" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="320.07000000000005" width="187.35" x="730" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-41" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-28" value="Logs / Security Events">
+          <mxGeometry relative="1" x="-0.5169" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="930.07" y="986.52" />
+              <mxPoint x="930.07" y="570.1" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-44" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-46" value="TCP 3306 – DB only">
+          <mxGeometry relative="1" x="-0.7006" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1040" y="1030.03" />
+              <mxPoint x="1040" y="890.03" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-58" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;exitX=0.999;exitY=0.618;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-22" value="HTTPS 443 / 80* – Authorized App Traffic">
+          <mxGeometry relative="1" x="0.2233" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="470.05" y="214.38" />
+              <mxPoint x="470.05" y="980.05" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-49" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="InewFNbxVDwqQDR-hb7V-21" value="VLAN 40">
+          <mxGeometry relative="1" x="-0.6494" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1540.07" y="75" />
+              <mxPoint x="1540.07" y="200.03" />
+              <mxPoint x="1430.07" y="200.03" />
+              <mxPoint x="1430.07" y="740.03" />
+              <mxPoint x="1120" y="740.03" />
+              <mxPoint x="1120" y="780.03" />
+              <mxPoint x="633.66" y="780.03" />
+            </Array>
+            <mxPoint x="1950" y="1107.64" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-40" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;" target="InewFNbxVDwqQDR-hb7V-28" value="Host / Firewall logs*">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="-170" />
+              <mxPoint x="1150" y="-170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="O6Pto0cdoQHRmtwz4HRb-7" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="615" width="200" x="170" y="-22.430000000000064" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-32" parent="O6Pto0cdoQHRmtwz4HRb-7" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#f3f4f6;strokeColor=#6b7280;" value="CLIENT / UNTRUSTED ZONE VLAN 10 – 10.20.10.0/24 GW 10.20.10.1" vertex="1">
+          <mxGeometry height="615" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-33" parent="O6Pto0cdoQHRmtwz4HRb-7" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;container=0;" value="Bác sĩ PC DHCP: 10.20.10.100–200 Client Certificate + Wazuh Agent HTTPS 443 / mTLS" vertex="1">
+          <mxGeometry height="105" width="150" x="20" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-34" parent="O6Pto0cdoQHRmtwz4HRb-7" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;container=0;" value="Staff / Clerk PC DHCP: 10.20.10.100–200 Client Certificate + Wazuh Agent HTTPS 443 / mTLS" vertex="1">
+          <mxGeometry height="105" width="140" x="30" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-35" parent="O6Pto0cdoQHRmtwz4HRb-7" style="shape=mxgraph.networks.pc;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#ffffff;strokeColor=#374151;container=0;" value="IT Admin PC DHCP / reservation Management access by policy HTTPS 443 / SSH 22*" vertex="1">
+          <mxGeometry height="105" width="150" x="25" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-37" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;entryX=-0.009;entryY=0.714;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.997;exitY=0.665;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-17" value="DENY – management isolated">
+          <mxGeometry relative="1" x="0.1553" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="640" y="502.4" />
+              <mxPoint x="640" y="80" />
+              <mxPoint x="1210" y="80" />
+              <mxPoint x="1210" y="-120.7" />
+            </Array>
+            <mxPoint x="280" y="370" as="sourcePoint" />
+            <mxPoint x="1374.4915254237285" y="-153.51428571428596" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-48" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-46" value="DENY – no direct DB access">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="15.03" y="1200.03" />
+              <mxPoint x="960" y="1200.03" />
+              <mxPoint x="960" y="1000.03" />
+              <mxPoint x="1140" y="1000.03" />
+              <mxPoint x="1140" y="940.03" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-14" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;exitX=0.158;exitY=0.009;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.012;entryY=0.314;entryDx=0;entryDy=0;entryPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-53" value="HTTPS 443 / mTLS">
+          <mxGeometry relative="1" x="0.0822" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="213.72" y="420.03" />
+              <mxPoint x="80" y="420.03" />
+              <mxPoint x="80" y="-179.97" />
+              <mxPoint x="280" y="-179.97" />
+              <mxPoint x="280" y="-219.97" />
+              <mxPoint x="180" y="-219.97" />
+              <mxPoint x="180" y="-538.52" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-42" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.5;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;exitX=0.999;exitY=0.31;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-27" value="DENY – IdP not directly exposed">
+          <mxGeometry relative="1" x="0.4884" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="400" y="465.1" />
+              <mxPoint x="400" y="-270" />
+              <mxPoint x="800" y="-270" />
+              <mxPoint x="800" y="-303.2" />
+            </Array>
+            <mxPoint x="280.6" y="320" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-56" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.8;strokeColor=#ea580c;dashed=1;endArrow=block;entryX=-0.001;entryY=0.876;entryDx=0;entryDy=0;entryPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-53" value="HTTPS 443 / mTLS*">
+          <mxGeometry relative="1" x="-0.2945" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="210" y="70" />
+              <mxPoint x="150" y="70" />
+              <mxPoint x="150" y="-90" />
+              <mxPoint x="320" y="-90" />
+              <mxPoint x="320" y="-280" />
+              <mxPoint x="230" y="-280" />
+              <mxPoint x="230" y="-477.67" />
+            </Array>
+            <mxPoint x="300" y="-440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-43" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;exitX=0.678;exitY=1.007;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-22" value="DENY – no direct access">
+          <mxGeometry relative="1" x="0.4781" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="41.72" y="1160.03" />
+              <mxPoint x="440" y="1160.03" />
+              <mxPoint x="440" y="1020.03" />
+            </Array>
+            <mxPoint x="60" y="1080" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-36" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-28" value="Wazuh Agent / Security Telemetry">
+          <mxGeometry relative="1" x="0.4915" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="480" y="295.11" />
+              <mxPoint x="480" y="-59.97" />
+              <mxPoint x="440" y="-59.97" />
+              <mxPoint x="440" y="-153.91" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-61" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.6;strokeColor=#7c3aed;dashed=1;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" value="Wazuh Agent / Security Telemetry">
+          <mxGeometry relative="1" x="0.5704" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="600" y="485.11" />
+              <mxPoint x="600" y="80.03" />
+              <mxPoint x="540" y="80.03" />
+              <mxPoint x="540" y="-79.97" />
+              <mxPoint x="480" y="-79.97" />
+              <mxPoint x="480" y="-119.97" />
+              <mxPoint x="800" y="-119.97" />
+              <mxPoint x="800" y="-129.97" />
+            </Array>
+            <mxPoint x="883.17" y="-129.97" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-57" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#ea580c;endArrow=block;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-53" value="HTTPS 443 / mTLS">
+          <mxGeometry relative="1" x="-0.0868" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="210" y="230" />
+              <mxPoint x="120" y="230" />
+              <mxPoint x="120" y="-130" />
+              <mxPoint x="300" y="-130" />
+              <mxPoint x="300" y="-250" />
+              <mxPoint x="210" y="-250" />
+              <mxPoint x="210" y="-518.42" />
+            </Array>
+            <mxPoint x="250" y="-470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="InewFNbxVDwqQDR-hb7V-50" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="InewFNbxVDwqQDR-hb7V-45" value="VLAN 50">
+          <mxGeometry relative="1" x="-0.3188" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1770.08" y="-630" />
+              <mxPoint x="1770.08" y="-430" />
+              <mxPoint x="1670" y="-430" />
+              <mxPoint x="1670" y="130" />
+              <mxPoint x="1475" y="130" />
+            </Array>
+            <mxPoint x="2420" y="-252.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mPfQcAceAJEkf-Ms-dm3-4" connectable="0" parent="InewFNbxVDwqQDR-hb7V-1" style="group" value="" vertex="1">
+          <mxGeometry height="350" width="245" x="845" y="110.07000000000005" as="geometry" />
+        </mxCell>
+        <mxCell id="mPfQcAceAJEkf-Ms-dm3-1" parent="mPfQcAceAJEkf-Ms-dm3-4" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontStyle=1;verticalAlign=top;spacingTop=10;fontSize=14;container=0;fillColor=#eff6ff;strokeColor=#2563eb;" value="INTERNAL APP ZONE VLAN 40 – 10.20.40.0/24 GW 10.20.40.1" vertex="1">
+          <mxGeometry height="350" width="245" as="geometry" />
+        </mxCell>
+        <mxCell id="mPfQcAceAJEkf-Ms-dm3-2" parent="mPfQcAceAJEkf-Ms-dm3-4" style="shape=mxgraph.networks.server;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=12;strokeWidth=1.5;fillColor=#eff6ff;strokeColor=#2563eb;" value="OpenEMR Web Server 10.20.40.10 (Static) HTTPS 443 / HTTP 80* Application / EMR" vertex="1">
+          <mxGeometry height="107.75862068965519" width="196" x="24.5" y="80.00275862068963" as="geometry" />
+        </mxCell>
+        <mxCell id="mPfQcAceAJEkf-Ms-dm3-3" parent="mPfQcAceAJEkf-Ms-dm3-4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#60a5fa;fontSize=11;align=left;verticalAlign=middle;" value="App policy: Pomerium → OpenEMR ALLOW Client → OpenEMR DENY Direct bypass blocked" vertex="1">
+          <mxGeometry height="99.13793103448276" width="196" x="24.5" y="220.0041379310345" as="geometry" />
+        </mxCell>
+        <mxCell id="mPXGA0zn-kNqfFI9u3fj-0" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="mPfQcAceAJEkf-Ms-dm3-2" value="HTTPS 443 / 80* – Authorized App Traffic">
+          <mxGeometry relative="1" x="0.2748" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="469" y="-460" />
+              <mxPoint x="720" y="-460" />
+              <mxPoint x="720" y="244" />
+            </Array>
+            <mxPoint x="630" y="380" as="sourcePoint" />
+            <mxPoint x="2190" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ivXUl9ibUoBuqiYCrPO3-0" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#dc2626;dashed=1;fontColor=#b91c1c;endArrow=block;entryX=-0.006;entryY=0.825;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.736;exitY=0.993;exitDx=0;exitDy=0;exitPerimeter=0;" target="mPfQcAceAJEkf-Ms-dm3-2" value="DENY – no direct access">
+          <mxGeometry relative="1" x="0.4392" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="300.4" y="610.03" />
+              <mxPoint x="1100" y="610.03" />
+              <mxPoint x="1100" y="520.03" />
+              <mxPoint x="790" y="520.03" />
+              <mxPoint x="790" y="279" />
+            </Array>
+            <mxPoint x="370" y="580" as="sourcePoint" />
+            <mxPoint x="2400" y="1142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fhYmq7z_3gm_qcTlE0oz-0" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="mPfQcAceAJEkf-Ms-dm3-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1.4;strokeColor=#7c3aed;dashed=1;endArrow=block;entryX=1.002;entryY=0.649;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.002;exitY=0.32;exitDx=0;exitDy=0;exitPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-28" value="Logs / Security Events">
+          <mxGeometry relative="1" x="-0.0279" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1067.1" y="224.6" />
+              <mxPoint x="1067.1" y="220" />
+              <mxPoint x="1250" y="220" />
+              <mxPoint x="1250" y="130" />
+              <mxPoint x="1130" y="130" />
+              <mxPoint x="1130" y="-137" />
+            </Array>
+            <mxPoint x="1505" y="599" as="sourcePoint" />
+            <mxPoint x="620" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y0asoVhtx7D-SIyw9x9w-0" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="InewFNbxVDwqQDR-hb7V-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#2563eb;endArrow=block;entryX=1.006;entryY=0.397;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1.005;exitY=0.435;exitDx=0;exitDy=0;exitPerimeter=0;" target="mPfQcAceAJEkf-Ms-dm3-1" value="VLAN 40">
+          <mxGeometry relative="1" x="-0.5744" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1750" y="-602.08" />
+              <mxPoint x="1750" y="-470" />
+              <mxPoint x="1630" y="-470" />
+              <mxPoint x="1630" y="80" />
+              <mxPoint x="1290" y="80" />
+              <mxPoint x="1290" y="370" />
+              <mxPoint x="1180" y="370" />
+              <mxPoint x="1180" y="250" />
+              <mxPoint x="1091.5" y="250" />
+            </Array>
+            <mxPoint x="1190" y="170" as="sourcePoint" />
+            <mxPoint x="1745" y="1146" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fXrnLdUw3pS7_H-5ebZ3-0" edge="1" parent="InewFNbxVDwqQDR-hb7V-1" source="mPfQcAceAJEkf-Ms-dm3-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;exitX=0.996;exitY=0.825;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.006;entryY=0.302;entryDx=0;entryDy=0;entryPerimeter=0;" target="InewFNbxVDwqQDR-hb7V-46" value="TCP 3306 – DB only">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1090" y="949" />
+              <mxPoint x="1090" y="881.33" />
+            </Array>
+            <mxPoint x="1280" y="1828.4" as="sourcePoint" />
+            <mxPoint x="1160" y="1230.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
