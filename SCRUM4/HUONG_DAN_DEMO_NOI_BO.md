@@ -430,3 +430,4 @@ Khi chạy demo đối soát nội bộ, hai bạn tick trực tiếp vào bản
 
 ---
 *Tài liệu kỹ thuật lưu hành nội bộ nhóm hoàn thành ngày 04/11/2026.*
+
