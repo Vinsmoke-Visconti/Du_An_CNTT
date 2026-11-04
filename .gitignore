@@ -19,7 +19,8 @@ Thumbs.db
 ~$*.docx
 ~$*.xlsx
 
-# SCRUM4: Chỉ giữ lại HUONG_DAN_DEMO_NOI_BO.md
+# SCRUM4: Chỉ giữ lại HUONG_DAN_DEMO_NOI_BO.md và HUONG_DAN_DEMO_NOI_BO.docx
 SCRUM4/*
 !SCRUM4/HUONG_DAN_DEMO_NOI_BO.md
+!SCRUM4/HUONG_DAN_DEMO_NOI_BO.docx
 
